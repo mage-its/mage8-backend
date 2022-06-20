@@ -2,6 +2,7 @@ const multer = require('multer');
 const path = require('path');
 const httpStatus = require('http-status');
 const kodeBayarService = require('./kodeBayar.service');
+const userService = require('./user.service');
 const { Olim, User } = require('../models');
 const config = require('../config/config');
 const ApiError = require('../utils/ApiError');
@@ -92,7 +93,7 @@ const daftarOlim = async (olimBody, files, user) => {
   const noUrut = kode.no.toString().padStart(3, '0');
 
   olim.noPeserta = `OLI0${noUrut}`;
-  olim.price = `${kode.price}.${noUrut}`;
+  olim.price = kode.price + kode.no;
 
   // eslint-disable-next-line no-param-reassign
   user.registeredComp = 'olim';
@@ -151,7 +152,7 @@ const createOlim = async (olimBody, files, userId) => {
   const noUrut = kode.no.toString().padStart(3, '0');
 
   olim.noPeserta = `OLI0${noUrut}`;
-  olim.price = `${kode.price}.${noUrut}`;
+  olim.price = kode.price + kode.no;
 
   user.registeredComp = 'olim';
   return Promise.all([olim.save(), user.save(), kodeBayarService.incNoUrut('olim', kode)]);
@@ -232,13 +233,12 @@ const deleteOlimById = async (olimId, olimObj = null, userObj = null) => {
  * @param {Olim} [olimObj=null]
  * @returns {Promise<Olim>}
  */
-const toggleVerif = async (olimId, olimObj = null) => {
+const toggleVerif = async (olimId, username, olimObj = null) => {
   const olim = olimObj ?? (await getOlimById(olimId));
   if (!olim) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
-
-  return updateOlimById(olim.id, { isVerified: !olim.isVerified }, olim);
+  return updateOlimById(olim.id, { isVerified: !olim.isVerified, verifiedBy: username}, olim);
 };
 
 module.exports = {

@@ -11,3 +11,4 @@ module.exports.compeService = require('./compe.service');
 module.exports.kodePromoService = require('./kodePromo.service');
 module.exports.tokenService = require('./token.service');
 module.exports.announcementService = require('./announcement.service');
+module.exports.linkShortenerService = require('./linkShortener.service');

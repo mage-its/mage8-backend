@@ -11,6 +11,8 @@ const kodeBayarRoute = require('./kodeBayar.route');
 const compeRoute = require('./compe.route');
 const kodePromoRoute = require('./kodePromo.route');
 const tokenRoute = require('./token.route');
+const linkShortenerRoute = require('./linkShortener.route');
+const linkShortenerController = require('../../controllers/linkShortener.controller');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -60,6 +62,10 @@ const defaultRoutes = [
     path: '/tokens',
     route: tokenRoute,
   },
+  {
+    path:'/linkshortener',
+    route: linkShortenerRoute,
+  },
 ];
 
 const devRoutes = [
@@ -70,15 +76,17 @@ const devRoutes = [
   },
 ];
 
-defaultRoutes.forEach((route) => {
-  router.use(route.path, route.route);
-});
-
-/* istanbul ignore next */
 if (config.env === 'development') {
   devRoutes.forEach((route) => {
     router.use(route.path, route.route);
   });
 }
+
+defaultRoutes.forEach((route) => {
+  router.use(route.path, route.route);
+});
+
+router.get('/:slug', linkShortenerController.requestHandler )
+
 
 module.exports = router;

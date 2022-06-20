@@ -52,7 +52,8 @@ const deleteOlim = catchAsync(async (req, res) => {
 });
 
 const toggleVerif = catchAsync(async (req, res) => {
-  const olim = await olimService.toggleVerif(req.params.olimId);
+  const thisUser = await userService.getUserById(req.user.id);
+  const olim = await olimService.toggleVerif(req.params.olimId,thisUser.name);
   res.send(olim);
 });
 

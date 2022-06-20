@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const { trusted } = require('mongoose');
 const { KodePromo } = require('../models');
 const ApiError = require('../utils/ApiError');
+const userService = require('./user.service');
 
 /**
  * Create a kodePromo
@@ -9,7 +10,7 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<KodePromo>}
  */
 const createKodePromo = async (kodePromoBody) => {
-  return KodePromo.create(kodePromoBody);
+  return await KodePromo.create(kodePromoBody);
 };
 
 /**
@@ -41,8 +42,8 @@ const getKodePromoById = async (id) => {
  * @param {string} category
  * @returns {Promise<KodePromo>}
  */
-const getKodePromoByKode = async (kode, category) => {
-  const kodePromo = await KodePromo.findOne({ kode, category });
+const getKodePromoByKode = async (kode) => {
+  const kodePromo = await KodePromo.findOne({ kode});
   if (!kodePromo) {
     throw new ApiError(httpStatus.NOT_FOUND, `Kode promo dengan kode ${kode} tidak ditemukan`);
   }
@@ -160,9 +161,7 @@ const applyPromo = async (kode, user, compe) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Anda sudah pernah menggunakan kode promo !!!!!');
   }
 
-  const [oldPrice, postFix] = compe.price.split('.');
-  const newPrice = parseInt(oldPrice, 10) - kodePromo.discountPrice;
-  const price = `${newPrice}.${postFix}`;
+  const price = compe.price - kodePromo.discountPrice;
   Object.assign(compe, { price, usedPromo: true, kodePromo: kode });
   kodePromo.usage += kodePromo.usage >= 0 ? 1 : 0;
 
@@ -173,6 +172,7 @@ module.exports = {
   createKodePromo,
   queryKodePromos,
   getKodePromoByKode,
+  getKodePromoById,
   updateKodePromoByKode,
   updateKodePromoById,
   deleteKodePromoByKode,

@@ -3,8 +3,11 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { userService, kodePromoService } = require('../services');
+const { User } = require('../models');
 
 const createKodePromo = catchAsync(async (req, res) => {
+  const thisUser = await userService.getUserById(req.user.id);
+  req.body.createdBy = thisUser.name;
   const kodePromo = await kodePromoService.createKodePromo(req.body);
   res.status(httpStatus.CREATED).send(kodePromo);
 });

@@ -157,7 +157,7 @@ module.exports = router;
  *               type: object
  *               properties:
  *                 gameDev:
- *                   $ref: '#/components/schemas/Game'
+ *                   $ref: '#/components/schemas/GameDev'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  */

@@ -127,7 +127,7 @@ const daftarAppDev = async (appDevBody, files, user) => {
   const noUrutPrefix = appDevBody.kategori === 'Siswa' ? '0' : '1';
 
   appDev.noPeserta = `DCA${noUrutPrefix}${noUrut}`;
-  appDev.price = `${kode.price}.${noUrut}`;
+  appDev.price = kode.price + kode.no;
 
   // eslint-disable-next-line no-param-reassign
   user.registeredComp = 'appdev';
@@ -221,7 +221,7 @@ const createAppDev = async (appDevBody, files, userId) => {
   const noUrutPrefix = appDevBody.kategori === 'Siswa' ? '0' : '1';
 
   appDev.noPeserta = `DCA${noUrutPrefix}${noUrut}`;
-  appDev.price = `${kode.price}.${noUrut}`;
+  appDev.price = kode.price + kode.no;
   appDev.user = user.id;
 
   user.registeredComp = 'appdev';
@@ -307,13 +307,13 @@ const deleteAppDevById = async (appDevId, appDevObj = null, userObj = null) => {
  * @param {AppDev} [appDevObj=null]
  * @returns {Promise<AppDev>}
  */
-const toggleVerif = async (appDevId, appDevObj = null) => {
+const toggleVerif = async (appDevId, username, appDevObj = null) => {
   const appDev = appDevObj ?? (await getAppDevById(appDevId));
   if (!appDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
 
-  return updateAppDevById(appDev.id, { isVerified: !appDev.isVerified }, appDev);
+  return updateAppDevById(appDev.id, { isVerified: !appDev.isVerified, verifiedBy: username }, appDev);
 };
 
 /**

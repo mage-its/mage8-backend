@@ -127,7 +127,7 @@ const daftarIotDev = async (iotDevBody, files, user) => {
   const noUrutPrefix = '1';
 
   iotDev.noPeserta = `DCI${noUrutPrefix}${noUrut}`;
-  iotDev.price = `${kode.price}.${noUrut}`;
+  iotDev.price = kode.price + kode.no;
 
   // eslint-disable-next-line no-param-reassign
   user.registeredComp = 'iotdev';
@@ -221,7 +221,7 @@ const createIotDev = async (iotDevBody, files, userId) => {
   const noUrutPrefix = '1';
 
   iotDev.noPeserta = `DCI${noUrutPrefix}${noUrut}`;
-  iotDev.price = `${kode.price}.${noUrut}`;
+  iotDev.price = kode.price + kode.no;
   iotDev.user = user.id;
 
   // eslint-disable-next-line no-param-reassign
@@ -308,13 +308,12 @@ const deleteIotDevById = async (iotDevId, iotDevObj = null, userObj = null) => {
  * @param {IotDev} [iotDevObj=null]
  * @returns {Promise<IotDev>}
  */
-const toggleVerif = async (iotDevId, iotDevObj = null) => {
+const toggleVerif = async (iotDevId, username, iotDevObj = null) => {
   const iotDev = iotDevObj ?? (await getIotDevById(iotDevId));
   if (!iotDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
-
-  return updateIotDevById(iotDev.id, { isVerified: !iotDev.isVerified }, iotDev);
+  return updateIotDevById(iotDev.id, { isVerified: !iotDev.isVerified, verifiedBy: username }, iotDev);
 };
 
 /**

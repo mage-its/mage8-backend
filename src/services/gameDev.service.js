@@ -127,7 +127,7 @@ const daftarGameDev = async (gameDevBody, files, user) => {
   const noUrutPrefix = gameDevBody.kategori === 'Siswa' ? '0' : '1';
 
   gameDev.noPeserta = `DCG${noUrutPrefix}${noUrut}`;
-  gameDev.price = `${kode.price}.${noUrut}`;
+  gameDev.price = kode.price + kode.no;
 
   // eslint-disable-next-line no-param-reassign
   user.registeredComp = 'gamedev';
@@ -224,7 +224,7 @@ const createGameDev = async (gameDevBody, files, userId) => {
   const noUrutPrefix = gameDevBody.kategori === 'Siswa' ? '0' : '1';
 
   gameDev.noPeserta = `DCG${noUrutPrefix}${noUrut}`;
-  gameDev.price = `${kode.price}.${noUrut}`;
+  gameDev.price = kode.price + kode.no;
   gameDev.user = user.id;
 
   // eslint-disable-next-line no-param-reassign
@@ -311,13 +311,13 @@ const deleteGameDevById = async (gameDevId, gameDevObj = null, userObj = null) =
  * @param {GameDev} [gameDevObj=null]
  * @returns {Promise<GameDev>}
  */
-const toggleVerif = async (gameDevId, gameDevObj = null) => {
+const toggleVerif = async (gameDevId, username, gameDevObj = null) => {
   const gameDev = gameDevObj ?? (await getGameDevById(gameDevId));
   if (!gameDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
 
-  return updateGameDevById(gameDev.id, { isVerified: !gameDev.isVerified }, gameDev);
+  return updateGameDevById(gameDev.id, { isVerified: !gameDev.isVerified, verifiedBy: username }, gameDev);
 };
 
 /**

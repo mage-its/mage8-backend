@@ -28,6 +28,9 @@ const kodePromoSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    createdBy: {
+      type: String,
+    },
   },
   {
     timestamps: true,

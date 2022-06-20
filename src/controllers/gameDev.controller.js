@@ -57,7 +57,8 @@ const deleteGameDev = catchAsync(async (req, res) => {
 });
 
 const toggleVerif = catchAsync(async (req, res) => {
-  const gameDev = await gameDevService.toggleVerif(req.params.gameDevId);
+  const thisUser = await userService.getUserById(req.user.id);
+  const gameDev = await gameDevService.toggleVerif(req.params.gameDevId, thisUser.name);
   res.send(gameDev);
 });
 

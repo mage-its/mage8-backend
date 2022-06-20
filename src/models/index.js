@@ -7,3 +7,5 @@ module.exports.IotDev = require('./iotDev.model');
 module.exports.KodeBayar = require('./kodeBayar.model');
 module.exports.KodePromo = require('./kodePromo.model');
 module.exports.Announcement = require('./announcement.model');
+module.exports.LinkShortener = require('./linkShortener.model');
+

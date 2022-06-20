@@ -102,6 +102,9 @@ const olimSchema = mongoose.Schema(
       type: String,
       default: null,
     },
+    verifiedBy:{
+      type: String,
+    },
     user: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'User',

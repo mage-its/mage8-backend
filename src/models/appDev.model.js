@@ -144,6 +144,9 @@ const appDevSchema = mongoose.Schema(
       type: Number,
       default: 1,
     },
+    verifiedBy:{
+      type : String,
+    },
     user: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'User',

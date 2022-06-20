@@ -19,7 +19,7 @@ router
 
 router
   .route('/:kodePromoId')
-  .patch(auth('manageKodePromo'), validate(kodePromoValidation.updateKodePromo), kodePromoController.createKodePromo)
+  .patch(auth('manageKodePromo'), validate(kodePromoValidation.updateKodePromo), kodePromoController.updateKodePromo)
   .get(auth('getKodePromo'), validate(kodePromoValidation.getKodePromo), kodePromoController.getKodePromo)
   .delete(auth('manageKodePromo'), validate(kodePromoValidation.deleteKodePromo), kodePromoController.deleteKodePromo);
 

@@ -57,7 +57,8 @@ const deleteAppDev = catchAsync(async (req, res) => {
 });
 
 const toggleVerif = catchAsync(async (req, res) => {
-  const appDev = await appDevService.toggleVerif(req.params.appDevId);
+  const thisUser = await userService.getUserById(req.user.id);
+  const appDev = await appDevService.toggleVerif(req.params.appDevId, thisUser.name);
   res.send(appDev);
 });
 

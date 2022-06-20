@@ -57,7 +57,8 @@ const deleteIotDev = catchAsync(async (req, res) => {
 });
 
 const toggleVerif = catchAsync(async (req, res) => {
-  const iotDev = await iotDevService.toggleVerif(req.params.iotDevId);
+  const thisUser = await userService.getUserById(req.user.id);
+  const iotDev = await iotDevService.toggleVerif(req.params.iotDevId, thisUser.name);
   res.send(iotDev);
 });
 

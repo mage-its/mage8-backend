@@ -82,7 +82,8 @@ const verifyEmail = catchAsync(async (req, res) => {
 
 const verifyEmailGet = catchAsync(async (req, res) => {
   await authService.verifyEmail(req.query.token);
-  res.redirect('/');
+  //res.redirect('/');
+  res.send("Verified");
 });
 
 module.exports = {
