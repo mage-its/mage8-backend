@@ -12,6 +12,8 @@ const compeRoute = require('./compe.route');
 const kodePromoRoute = require('./kodePromo.route');
 const tokenRoute = require('./token.route');
 const linkShortenerRoute = require('./linkShortener.route');
+const webinarRoute = require('./webinar.route');
+const workshopRoute = require('./workshop.route');
 const linkShortenerController = require('../../controllers/linkShortener.controller');
 const config = require('../../config/config');
 
@@ -66,6 +68,14 @@ const defaultRoutes = [
     path:'/linkshortener',
     route: linkShortenerRoute,
   },
+  {
+    path:'/webinar',
+    route: webinarRoute,
+  },
+  {
+    path:'/workshop',
+    route: workshopRoute,
+  }
 ];
 
 const devRoutes = [

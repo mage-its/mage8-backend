@@ -9,3 +9,5 @@ module.exports.compeController = require('./compe.controller');
 module.exports.kodePromoController = require('./kodePromo.controller');
 module.exports.tokenController = require('./token.controller');
 module.exports.announcementController = require('./announcement.controller');
+module.exports.webinarController = require('./webinar.controller');
+module.exports.workshopController = require('./workshop.controller');

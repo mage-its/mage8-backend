@@ -8,4 +8,6 @@ module.exports.KodeBayar = require('./kodeBayar.model');
 module.exports.KodePromo = require('./kodePromo.model');
 module.exports.Announcement = require('./announcement.model');
 module.exports.LinkShortener = require('./linkShortener.model');
+module.exports.Webinar = require('./webinar.model');
+module.exports.Workshop = require('./workshop.model');
 
