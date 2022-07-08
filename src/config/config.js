@@ -87,6 +87,7 @@ module.exports = {
       },
     },
     from: envVars.EMAIL_FROM,
+    senderName: envVars.EMAIL_NAME,
   },
   url: envVars.APP_URL,
   firepw: envVars.FIREBASE_PW,
