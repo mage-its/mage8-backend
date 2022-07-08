@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { compeService } = require('../services');
+const { userService, compeService } = require('../services');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 
@@ -10,7 +10,8 @@ const pay = catchAsync(async (req, res) => {
 });
 
 const toggleVerif = catchAsync(async (req, res) => {
-  const compe = await compeService.toggleVerif(req.params.compeId);
+  const thisUser = await userService.getUserById(req.user.id);
+  const compe = await compeService.toggleVerif(req.params.compeId, thisUser.name);
   res.send(compe);
 });
 

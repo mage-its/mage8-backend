@@ -313,7 +313,7 @@ const toggleVerif = async (iotDevId, username, iotDevObj = null) => {
   if (!iotDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
-  return updateIotDevById(iotDev.id, { isVerified: !iotDev.isVerified, verifiedBy: username }, iotDev);
+  return updateIotDevById(iotDev.id, { isVerified: !iotDev.isVerified, verifiedBy: iotDev.isVerified? undefined:username }, iotDev);
 };
 
 /**

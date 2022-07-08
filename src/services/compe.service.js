@@ -167,13 +167,13 @@ const getCompeByNamaTim = async (namaTim) => {
  * @param {ObjectId} compeId
  * @returns {Promise<Olim|GameDev|AppDev|IotDev>}
  */
-const toggleVerif = async (compeId) => {
+const toggleVerif = async (compeId,username) => {
   const [compe, index] = await getCompeById(compeId);
   if (!compe || index === -1) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
 
-  return compeToggleVerif[index](compeId, compe);
+  return compeToggleVerif[index](compeId, username, compe);
 };
 
 const compeQuery = {

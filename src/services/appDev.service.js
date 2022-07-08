@@ -312,8 +312,7 @@ const toggleVerif = async (appDevId, username, appDevObj = null) => {
   if (!appDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
-
-  return updateAppDevById(appDev.id, { isVerified: !appDev.isVerified, verifiedBy: username }, appDev);
+  return updateAppDevById(appDev.id, { isVerified: !appDev.isVerified, verifiedBy: appDev.isVerified? undefined:username }, appDev);
 };
 
 /**

@@ -316,8 +316,7 @@ const toggleVerif = async (gameDevId, username, gameDevObj = null) => {
   if (!gameDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
-
-  return updateGameDevById(gameDev.id, { isVerified: !gameDev.isVerified, verifiedBy: username }, gameDev);
+  return updateGameDevById(gameDev.id, { isVerified: !gameDev.isVerified, verifiedBy: gameDev.isVerified? undefined:username }, gameDev);
 };
 
 /**
