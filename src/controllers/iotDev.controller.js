@@ -5,10 +5,10 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 
 const daftarIotDev = catchAsync(async (req, res) => {
-  const { body, files, user } = req;
+  const { body, user } = req;
   await userService.checkEmailVerification(user.id);
   await userService.isRegistered(user.id);
-  const [iotDev] = await iotDevService.daftarIotDev(body, files, user);
+  const [iotDev] = await iotDevService.daftarIotDev(body, user);
   res.status(httpStatus.CREATED).send({ iotDev });
 });
 
@@ -18,16 +18,16 @@ const updateProfile = catchAsync(async (req, res) => {
 });
 
 const uploadProposal = catchAsync(async (req, res) => {
-  const iotDev = await iotDevService.uploadProposal(req.user.id, req.files);
+  const iotDev = await iotDevService.uploadProposal(req.user.id, req.body);
   res.send(iotDev);
 });
 
 const createIotDev = catchAsync(async (req, res) => {
   const { userId } = req.params;
-  const { body, files } = req;
+  const { body } = req;
   await userService.checkEmailVerification(userId);
   await userService.isRegistered(userId);
-  const [iotDev] = await iotDevService.createIotDev(body, files, userId);
+  const [iotDev] = await iotDevService.createIotDev(body, userId);
   res.status(httpStatus.CREATED).send({ iotDev });
 });
 

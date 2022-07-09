@@ -5,10 +5,10 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 
 const daftarOlim = catchAsync(async (req, res) => {
-  const { body, files, user } = req;
+  const { body,  user } = req;
   await userService.checkEmailVerification(user.id);
   await userService.isRegistered(user.id);
-  const [olim] = await olimService.daftarOlim(body, files, user);
+  const [olim] = await olimService.daftarOlim(body,  user);
   res.status(httpStatus.CREATED).send({ olim });
 });
 
@@ -19,10 +19,10 @@ const updateProfile = catchAsync(async (req, res) => {
 
 const createOlim = catchAsync(async (req, res) => {
   const { userId } = req.params;
-  const { body, files } = req;
+  const { body } = req;
   await userService.checkEmailVerification(userId);
   await userService.isRegistered(userId);
-  const [olim] = await olimService.createOlim(body, files, userId);
+  const [olim] = await olimService.createOlim(body,  userId);
   res.status(httpStatus.CREATED).send({ olim });
 });
 
