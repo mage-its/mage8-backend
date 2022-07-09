@@ -36,7 +36,7 @@ const deleteLinkShortenerBySlug = async (slug) => {
 };
 
 const createLinkShortener = async (linkShortenerBody) => {
-  if (LinkShortener.isSlugTaken(linkShortenerBody.slug)) {
+  if (await LinkShortener.isSlugTaken(linkShortenerBody.slug)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Short Link sudah terpakai!');
   }
   return await LinkShortener.create(linkShortenerBody);
