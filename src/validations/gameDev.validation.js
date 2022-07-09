@@ -19,6 +19,12 @@ const daftarGameDev = {
       alamatInstansi: Joi.string().trim().min(1).max(100).required(),
       asalKota: Joi.string().trim().min(1).max(100).required(),
       asalInfo: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
+      pathBuktiFollowMage: Joi.string().trim().min(1).max(100).required(),
+      pathBuktiUploadTwibbon: Joi.string().trim().min(1).max(100).required(),
+      pathBuktiRepostStory: Joi.string().trim().min(1).max(100).required(),
     })
     .with('namaAnggota2', 'namaAnggota1'),
 };
@@ -40,6 +46,12 @@ const updateProfile = {
       alamatInstansi: Joi.string().trim().max(100).allow(''),
       asalKota: Joi.string().trim().max(100).allow(''),
       asalInfo: Joi.string().trim().max(100).allow(''),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
+      pathBuktiFollowMage: Joi.string().trim().min(1).max(100),
+      pathBuktiUploadTwibbon: Joi.string().trim().min(1).max(100).required(),
+      pathBuktiRepostStory: Joi.string().trim().min(1).max(100).required(),
     })
     .min(1),
 };
@@ -62,6 +74,12 @@ const createGameDev = {
       alamatInstansi: Joi.string().trim().min(1).max(100).required(),
       asalKota: Joi.string().trim().min(1).max(100).required(),
       asalInfo: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
+      pathBuktiFollowMage: Joi.string().trim().min(1).max(100),
+      pathBuktiUploadTwibbon: Joi.string().trim().min(1).max(100).required(),
+      pathBuktiRepostStory: Joi.string().trim().min(1).max(100).required(),
     })
     .with('namaAnggota2', 'namaAnggota1'),
   params: Joi.object().keys({
@@ -104,6 +122,12 @@ const updateGameDev = {
       alamatInstansi: Joi.string().trim().max(100).allow(''),
       asalKota: Joi.string().trim().max(100).allow(''),
       asalInfo: Joi.string().trim().max(100).allow(''),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
+      pathBuktiFollowMage: Joi.string().trim().min(1).max(100),
+      pathBuktiUploadTwibbon: Joi.string().trim().min(1).max(100),
+      pathBuktiRepostStory: Joi.string().trim().min(1).max(100),
       tahap: Joi.number().max(69).allow(''),
       price: Joi.string()
         .regex(/^[1-9]\d\d?\.\d{3}$/)

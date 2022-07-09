@@ -18,23 +18,18 @@ router.post(
   '/daftar-iotdev',
   registerBarrier('devcom'),
   auth(),
-  readForm('iotdev'),
   validate(iotDevValidation.daftarIotDev),
-  removeEmpty,
   iotDevController.daftarIotDev,
-  cancelFileUpload()
 );
 
 router.patch(
   '/update-profile',
   auth(),
-  form,
   validate(iotDevValidation.updateProfile),
-  removeEmpty,
   iotDevController.updateProfile
 );
 
-router.post('/upload-proposal', proposalBarrier(), auth(), readForm('iotdevProposal'), iotDevController.uploadProposal);
+router.post('/upload-proposal', proposalBarrier(), auth(),  iotDevController.uploadProposal);
 
 // Admin route
 
@@ -43,17 +38,14 @@ router.get('/', auth('getUsers'), validate(iotDevValidation.getIotDevs), iotDevC
 router.post(
   '/:userId',
   auth('manageUsers'),
-  readForm('iotdev'),
   validate(iotDevValidation.createIotDev),
-  removeEmpty,
   iotDevController.createIotDev,
-  cancelFileUpload()
 );
 
 router
   .route('/:iotDevId')
   .get(auth('getUsers'), validate(iotDevValidation.getIotDev), iotDevController.getIotDev)
-  .patch(auth('manageUsers'), form, validate(iotDevValidation.updateIotDev), removeEmpty, iotDevController.updateIotDev)
+  .patch(auth('manageUsers'),  validate(iotDevValidation.updateIotDev),  iotDevController.updateIotDev)
   .delete(auth('manageUsers'), validate(iotDevValidation.deleteIotDev), iotDevController.deleteIotDev);
 
 router.post(

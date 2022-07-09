@@ -22,6 +22,12 @@ const daftarIotDev = {
       alamatInstansiAnggota2: Joi.string().trim().allow('').max(100),
       asalKota: Joi.string().trim().min(1).max(100).required(),
       asalInfo: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
+      pathBuktiFollowMage: Joi.string().trim().min(1).max(100).required(),
+      pathBuktiUploadTwibbon: Joi.string().trim().min(1).max(100).required(),
+      pathBuktiRepostStory: Joi.string().trim().min(1).max(100).required(),
     })
     .with('namaAnggota2', 'namaAnggota1')
     .and('asalInstansiKetua', 'alamatInstansiKetua')
@@ -50,6 +56,12 @@ const updateProfile = {
       alamatInstansiAnggota2: Joi.string().trim().allow('').max(100),
       asalKota: Joi.string().trim().max(100).allow(''),
       asalInfo: Joi.string().trim().max(100).allow(''),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
+      pathBuktiFollowMage: Joi.string().trim().min(1).max(100),
+      pathBuktiUploadTwibbon: Joi.string().trim().min(1).max(100),
+      pathBuktiRepostStory: Joi.string().trim().min(1).max(100),
     })
     .min(1),
 };
@@ -75,6 +87,12 @@ const createIotDev = {
       alamatInstansiAnggota2: Joi.string().trim().allow('').max(100),
       asalKota: Joi.string().trim().min(1).max(100).required(),
       asalInfo: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
+      pathBuktiFollowMage: Joi.string().trim().min(1).max(100).required(),
+      pathBuktiUploadTwibbon: Joi.string().trim().min(1).max(100).required(),
+      pathBuktiRepostStory: Joi.string().trim().min(1).max(100).required(),
     })
     .with('namaAnggota2', 'namaAnggota1')
     .and('asalInstansiKetua', 'alamatInstansiKetua')
@@ -129,6 +147,12 @@ const updateIotDev = {
         .regex(/^[1-9]\d\d?\.\d{3}$/)
         .allow(''),
       isVerified: Joi.boolean(),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
+      pathBuktiFollowMage: Joi.string().trim().min(1).max(100),
+      pathBuktiUploadTwibbon: Joi.string().trim().min(1).max(100),
+      pathBuktiRepostStory: Joi.string().trim().min(1).max(100),
     })
     .min(1),
 };

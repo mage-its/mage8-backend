@@ -1,61 +1,7 @@
-const multer = require('multer');
-const path = require('path');
 const httpStatus = require('http-status');
-const sanitizeFilename = require('sanitize-filename');
 const kodeBayarService = require('./kodeBayar.service');
 const { AppDev, User } = require('../models');
-const config = require('../config/config');
 const ApiError = require('../utils/ApiError');
-const frontendPath = require('../utils/frontendPath');
-const { removeFilePaths } = require('../utils/removeFile');
-const { isImageOrPdf, isPdf } = require('../utils/isImageOrPdf');
-
-const storage = multer.diskStorage({
-  destination: path.join(config.frontend, 'uploads/appdev/daftar'),
-  filename: (req, file, cb) => {
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e6)}`;
-    cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
-  },
-});
-
-const proposalStorage = multer.diskStorage({
-  destination: path.join(config.frontend, 'uploads/appdev/proposal'),
-  filename: (req, file, cb) => {
-    const uniqueSuffix = `${Date.now()}${Math.round(Math.random() * 1e5)}`;
-    const cleanName = sanitizeFilename(file.originalname);
-    cb(null, `${path.parse(cleanName).name}-${uniqueSuffix}${path.extname(file.originalname)}`);
-  },
-});
-
-const upload = multer({
-  storage,
-  limits: {
-    fileSize: 2 * 1024 * 1024, // 1000000 Bytes = 1 MB
-  },
-  fileFilter(req, file, cb) {
-    isImageOrPdf(file, cb);
-  },
-});
-
-const multerProposal = multer({
-  storage: proposalStorage,
-  limits: {
-    fileSize: 10 * 1024 * 1024,
-  },
-  fileFilter(req, file, cb) {
-    isPdf(file, cb);
-  },
-}).fields([{ name: 'proposal', maxCount: 1 }]);
-
-const multiUploads = upload.fields([
-  { name: 'identitasKetua', maxCount: 1 },
-  { name: 'identitasAnggota1', maxCount: 1 },
-  { name: 'identitasAnggota2', maxCount: 1 },
-  { name: 'buktiUploadTwibbon', maxCount: 1 },
-  { name: 'buktiFollowMage', maxCount: 1 },
-  { name: 'buktiRepostStory', maxCount: 1 },
-]);
-
 /**
  * Get appdev by user id
  * @param {ObjectId} user
@@ -77,43 +23,33 @@ const getAppDevByNamaTim = async (namaTim) => {
 /**
  * Register appdev service
  * @param {Object} appDevBody
- * @param {Object} files
+ * @param {Object} updateBody
  * @param {User} user
  * @returns {Promise<Array<Promise<AppDev>, Promise<User>, Promise<KodeBayar>>>}
  */
-const daftarAppDev = async (appDevBody, files, user) => {
+const daftarAppDev = async (appDevBody, user) => {
   const appDev = new AppDev(appDevBody);
 
-  if (!files.identitasKetua) {
+  if (!appDevBody.pathIdentitasKetua) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas ketua WAJIB diberikan');
   }
-  appDev.pathIdentitasKetua = frontendPath(files.identitasKetua[0].path);
 
-  if (files.identitasAnggota1?.[0]?.path && appDev.namaAnggota1) {
-    appDev.pathIdentitasAnggota1 = frontendPath(files.identitasAnggota1[0].path);
-    if (files.identitasAnggota2?.[0]?.path && appDev.namaAnggota2) {
-      appDev.pathIdentitasAnggota2 = frontendPath(files.identitasAnggota2[0].path);
-    } else if (appDev.namaAnggota2) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Semua Identitas anggota WAJIB diberikan');
+ if(appDevBody.namaAnggota1)
+ {
+  if(appDevBody.pathIdentitasAnggota1)
+  {
+    if(appDevBody.namaAnggota2 && !appDevBody.pathIdentitasAnggota2)
+    {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
     }
-  } else if (appDev.namaAnggota1) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Semua Identitas anggota WAJIB diberikan');
   }
+  else if(!appDevBody.pathIdentitasAnggota1){
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
+  }
+ }
 
-  if (!files.buktiUploadTwibbon || !files.buktiFollowMage || !files.buktiRepostStory) {
+  if (!appDevBody.pathBuktiUploadTwibbon || !appDevBody.pathBuktiFollowMage || !appDevBody.pathBuktiRepostStory) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Persyaratan registrasi wajib diupload');
-  }
-
-  appDev.pathBuktiUploadTwibbon = frontendPath(files.buktiUploadTwibbon[0].path);
-  appDev.pathBuktiFollowMage = frontendPath(files.buktiFollowMage[0].path);
-  appDev.pathBuktiRepostStory = frontendPath(files.buktiRepostStory[0].path);
-
-  if (!appDev.namaAnggota1 && files.identitasAnggota1?.[0]?.path) {
-    removeFilePaths([frontendPath(files.identitasAnggota1[0].path)]);
-  }
-
-  if (!appDev.namaAnggota2 && files.identitasAnggota2?.[0]?.path) {
-    removeFilePaths([frontendPath(files.identitasAnggota2[0].path)]);
   }
 
   appDev.user = user.id;
@@ -137,10 +73,10 @@ const daftarAppDev = async (appDevBody, files, user) => {
 /**
  * Upload proposal
  * @param {ObjectId} userId
- * @param {Object} files
+ * @param {object} requestBody  
  * @returns {Promise<AppDev>}
  */
-const uploadProposal = async (userId, files) => {
+const uploadProposal = async (userId, requestBody) => {
   const appDev = await getAppDevByUserId(userId);
   if (!appDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Peserta tidak ditemukan');
@@ -148,14 +84,9 @@ const uploadProposal = async (userId, files) => {
   if (appDev.tahap !== 1) {
     throw new ApiError(httpStatus.BAD_REQUEST, `Upload proposal hanya saat tahap 1, anda sekarang di tahap ${appDev.tahap}`);
   }
-  if (!files.proposal?.[0]?.path) {
+  if (!requestBody.pathProposal) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'File proposal harus diupload');
   }
-  // Delete proposal if exist
-  if (appDev.pathProposal) {
-    await removeFilePaths([appDev.pathProposal]);
-  }
-  appDev.pathProposal = frontendPath(files.proposal[0].path);
   return appDev.save();
 };
 
@@ -184,33 +115,37 @@ const updateAppDevByUserId = async (userId, updateBody, appObj = null) => {
 /**
  * Create appdev
  * @param {Object} appDevBody
- * @param {Object} files
+ * @param {Object} updateBody
  * @param {ObjectId} userId
  * @returns {Promise<Array<Promise<AppDev>, Promise<User>, Promise<KodeBayar>>>}
  */
-const createAppDev = async (appDevBody, files, userId) => {
+const createAppDev = async (appDevBody, userId) => {
   const appDev = new AppDev(appDevBody);
   const user = await User.findById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  if (files.identitasAnggota1?.[0]?.path) {
-    appDev.pathIdentitasAnggota1 = frontendPath(files.identitasAnggota1[0].path);
+
+  if (!appDevBody.pathIdentitasKetua) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas ketua WAJIB diberikan');
   }
-  if (files.identitasAnggota2?.[0]?.path) {
-    appDev.pathIdentitasAnggota2 = frontendPath(files.identitasAnggota2[0].path);
+
+ if(appDevBody.namaAnggota1)
+ {
+  if(appDevBody.pathIdentitasAnggota1)
+  {
+    if(appDevBody.namaAnggota2 && !appDevBody.pathIdentitasAnggota2)
+    {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
+    }
   }
-  if (files.identitasKetua?.[0]?.path) {
-    appDev.pathIdentitasKetua = frontendPath(files.identitasKetua[0].path);
+  else if(!appDevBody.pathIdentitasAnggota1){
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
   }
-  if (files.buktiUploadTwibbon?.[0]?.path) {
-    appDev.pathBuktiUploadTwibbon = frontendPath(files.buktiUploadTwibbon[0].path);
-  }
-  if (files.buktiFollowMage?.[0]?.path) {
-    appDev.pathBuktiFollowMage = frontendPath(files.buktiFollowMage[0].path);
-  }
-  if (files.buktiRepostStory?.[0]?.path) {
-    appDev.pathBuktiRepostStory = frontendPath(files.buktiRepostStory[0].path);
+ }
+
+  if (!appDevBody.pathBuktiUploadTwibbon || !appDevBody.pathBuktiFollowMage || !appDevBody.pathBuktiRepostStory) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Persyaratan registrasi wajib diupload');
   }
   const cabang = appDevBody.kategori === 'Siswa' ? 'adevs' : 'adevm';
 
@@ -287,16 +222,6 @@ const deleteAppDevById = async (appDevId, appDevObj = null, userObj = null) => {
   if (user) {
     user.registeredComp = '';
   }
-  await removeFilePaths([
-    appDev.pathIdentitasKetua,
-    appDev.pathIdentitasAnggota1,
-    appDev.pathIdentitasAnggota2,
-    appDev.pathBuktiUploadTwibbon,
-    appDev.pathBuktiFollowMage,
-    appDev.pathBuktiRepostStory,
-    appDev.pathProposal,
-    appDev.pathBuktiBayar,
-  ]);
   await Promise.all([appDev.remove(), user.save()]);
   return appDev;
 };
@@ -352,8 +277,6 @@ const decTahap = async (appDevId) => {
 module.exports = {
   daftarAppDev,
   uploadProposal,
-  multiUploads,
-  multerProposal,
   queryAppDevs,
   createAppDev,
   getAppDevById,

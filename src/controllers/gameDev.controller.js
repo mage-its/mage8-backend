@@ -5,10 +5,10 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 
 const daftarGameDev = catchAsync(async (req, res) => {
-  const { body, files, user } = req;
+  const { body,  user } = req;
   await userService.checkEmailVerification(user.id);
   await userService.isRegistered(user.id);
-  const [gameDev] = await gameDevService.daftarGameDev(body, files, user);
+  const [gameDev] = await gameDevService.daftarGameDev(body, user);
   res.status(httpStatus.CREATED).send({ gameDev });
 });
 
@@ -18,16 +18,16 @@ const updateProfile = catchAsync(async (req, res) => {
 });
 
 const uploadProposal = catchAsync(async (req, res) => {
-  const gameDev = await gameDevService.uploadProposal(req.user.id, req.files);
+  const gameDev = await gameDevService.uploadProposal(req.user.id, req.body);
   res.send(gameDev);
 });
 
 const createGameDev = catchAsync(async (req, res) => {
   const { userId } = req.params;
-  const { body, files } = req;
+  const { body} = req;
   await userService.checkEmailVerification(userId);
   await userService.isRegistered(userId);
-  const [gameDev] = await gameDevService.createGameDev(body, files, userId);
+  const [gameDev] = await gameDevService.createGameDev(body, userId);
   res.status(httpStatus.CREATED).send({ gameDev });
 });
 

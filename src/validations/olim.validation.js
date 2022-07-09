@@ -15,6 +15,9 @@ const daftarOlim = {
       alamatInstansi: Joi.string().trim().min(1).max(100).required(),
       asalKota: Joi.string().trim().min(1).max(100).required(),
       asalInfo: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
     })
     .with('namaAnggota2', 'namaAnggota1'),
 };
@@ -33,6 +36,9 @@ const updateProfile = {
       alamatInstansi: Joi.string().trim().max(100).allow(''),
       asalKota: Joi.string().trim().max(100).allow(''),
       asalInfo: Joi.string().trim().max(100).allow(''),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
     })
     .min(1),
 };
@@ -51,6 +57,9 @@ const createOlim = {
       alamatInstansi: Joi.string().trim().min(1).max(100).required(),
       asalKota: Joi.string().trim().min(1).max(100).required(),
       asalInfo: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100).required(),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
     })
     .with('namaAnggota2', 'namaAnggota1'),
   params: Joi.object().keys({
@@ -90,6 +99,9 @@ const updateOlim = {
       alamatInstansi: Joi.string().trim().max(100).allow(''),
       asalKota: Joi.string().trim().max(100).allow(''),
       asalInfo: Joi.string().trim().max(100).allow(''),
+      pathIdentitasKetua: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
+      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
       price: Joi.string()
         .regex(/^[1-9]\d\d?\.\d{3}$/)
         .allow(''),

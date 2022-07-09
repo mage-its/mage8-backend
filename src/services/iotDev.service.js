@@ -1,60 +1,7 @@
-const multer = require('multer');
-const path = require('path');
 const httpStatus = require('http-status');
-const sanitizeFilename = require('sanitize-filename');
 const kodeBayarService = require('./kodeBayar.service');
 const { IotDev, User } = require('../models');
-const config = require('../config/config');
 const ApiError = require('../utils/ApiError');
-const frontendPath = require('../utils/frontendPath');
-const { removeFilePaths } = require('../utils/removeFile');
-const { isImageOrPdf, isPdf } = require('../utils/isImageOrPdf');
-
-const storage = multer.diskStorage({
-  destination: path.join(config.frontend, 'uploads/iotdev/daftar'),
-  filename: (req, file, cb) => {
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e6)}`;
-    cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
-  },
-});
-
-const proposalStorage = multer.diskStorage({
-  destination: path.join(config.frontend, 'uploads/iotdev/proposal'),
-  filename: (req, file, cb) => {
-    const uniqueSuffix = `${Date.now()}${Math.round(Math.random() * 1e5)}`;
-    const cleanName = sanitizeFilename(file.originalname);
-    cb(null, `${path.parse(cleanName).name}-${uniqueSuffix}${path.extname(file.originalname)}`);
-  },
-});
-
-const upload = multer({
-  storage,
-  limits: {
-    fileSize: 2 * 1024 * 1024, // 1000000 Bytes = 1 MB
-  },
-  fileFilter(req, file, cb) {
-    isImageOrPdf(file, cb);
-  },
-});
-
-const multerProposal = multer({
-  storage: proposalStorage,
-  limits: {
-    fileSize: 10 * 1024 * 1024,
-  },
-  fileFilter(req, file, cb) {
-    isPdf(file, cb);
-  },
-}).fields([{ name: 'proposal', maxCount: 1 }]);
-
-const multiUploads = upload.fields([
-  { name: 'identitasKetua', maxCount: 1 },
-  { name: 'identitasAnggota1', maxCount: 1 },
-  { name: 'identitasAnggota2', maxCount: 1 },
-  { name: 'buktiUploadTwibbon', maxCount: 1 },
-  { name: 'buktiFollowMage', maxCount: 1 },
-  { name: 'buktiRepostStory', maxCount: 1 },
-]);
 
 /**
  * Get iotdev by user id
@@ -77,43 +24,32 @@ const getIotDevByNamaTim = async (namaTim) => {
 /**
  * Register iotdev service
  * @param {Object} iotDevBody
- * @param {Object} files
  * @param {User} user
  * @returns {Promise<Array<Promise<IotDev>, Promise<User>, Promise<KodeBayar>>>}
  */
-const daftarIotDev = async (iotDevBody, files, user) => {
+const daftarIotDev = async (iotDevBody, user) => {
   const iotDev = new IotDev(iotDevBody);
 
-  if (!files.identitasKetua) {
+  if (!iotDevBody.pathIdentitasKetua) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas ketua WAJIB diberikan');
   }
-  iotDev.pathIdentitasKetua = frontendPath(files.identitasKetua[0].path);
 
-  if (files.identitasAnggota1?.[0]?.path && iotDev.namaAnggota1) {
-    iotDev.pathIdentitasAnggota1 = frontendPath(files.identitasAnggota1[0].path);
-    if (files.identitasAnggota2?.[0]?.path && iotDev.namaAnggota2) {
-      iotDev.pathIdentitasAnggota2 = frontendPath(files.identitasAnggota2[0].path);
-    } else if (iotDev.namaAnggota2) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Semua Identitas anggota WAJIB diberikan');
+ if(iotDevBody.namaAnggota1)
+ {
+  if(iotDevBody.pathIdentitasAnggota1)
+  {
+    if(iotDevBody.namaAnggota2 && !iotDevBody.pathIdentitasAnggota2)
+    {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
     }
-  } else if (iotDev.namaAnggota1) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Semua Identitas anggota WAJIB diberikan');
   }
+  else if(!iotDevBody.pathIdentitasAnggota1){
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
+  }
+ }
 
-  if (!files.buktiUploadTwibbon || !files.buktiFollowMage || !files.buktiRepostStory) {
+  if (!iotDevBody.pathBuktiUploadTwibbon || !iotDevBody.pathBuktiFollowMage || !iotDevBody.pathBuktiRepostStory) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Persyaratan registrasi wajib diupload');
-  }
-
-  iotDev.pathBuktiUploadTwibbon = frontendPath(files.buktiUploadTwibbon[0].path);
-  iotDev.pathBuktiFollowMage = frontendPath(files.buktiFollowMage[0].path);
-  iotDev.pathBuktiRepostStory = frontendPath(files.buktiRepostStory[0].path);
-
-  if (!iotDev.namaAnggota1 && files.identitasAnggota1?.[0]?.path) {
-    removeFilePaths([frontendPath(files.identitasAnggota1[0].path)]);
-  }
-
-  if (!iotDev.namaAnggota2 && files.identitasAnggota2?.[0]?.path) {
-    removeFilePaths([frontendPath(files.identitasAnggota2[0].path)]);
   }
 
   iotDev.user = user.id;
@@ -137,10 +73,10 @@ const daftarIotDev = async (iotDevBody, files, user) => {
 /**
  * Upload proposal
  * @param {ObjectId} userId
- * @param {Object} files
+ * @param {Object} iotDevBody
  * @returns {Promise<IotDev>}
  */
-const uploadProposal = async (userId, files) => {
+const uploadProposal = async (userId, iotDevBody) => {
   const iotDev = await getIotDevByUserId(userId);
   if (!iotDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Peserta tidak ditemukan');
@@ -148,14 +84,10 @@ const uploadProposal = async (userId, files) => {
   if (iotDev.tahap !== 1) {
     throw new ApiError(httpStatus.BAD_REQUEST, `Upload proposal hanya saat tahap 1, anda sekarang di tahap ${iotDev.tahap}`);
   }
-  if (!files.proposal?.[0]?.path) {
+  if (!iotDevBody.proposal?.[0]?.path) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'File proposal harus diupload');
   }
   // Delete proposal if exist
-  if (iotDev.pathProposal) {
-    await removeFilePaths([iotDev.pathProposal]);
-  }
-  iotDev.pathProposal = frontendPath(files.proposal[0].path);
   return iotDev.save();
 };
 
@@ -184,33 +116,35 @@ const updateIotDevByUserId = async (userId, updateBody, iotObj = null) => {
 /**
  * Create iotdev
  * @param {Object} iotDevBody
- * @param {Object} files
  * @param {ObjectId} userId
  * @returns {Promise<Array<Promise<IotDev>, Promise<User>, Promise<KodeBayar>>>}
  */
-const createIotDev = async (iotDevBody, files, userId) => {
+const createIotDev = async (iotDevBody, userId) => {
   const iotDev = new IotDev(iotDevBody);
   const user = await User.findById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  if (files.identitasAnggota1?.[0]?.path) {
-    iotDev.pathIdentitasAnggota1 = frontendPath(files.identitasAnggota1[0].path);
+  if (!iotDevBody.pathIdentitasKetua) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas ketua WAJIB diberikan');
   }
-  if (files.identitasAnggota2?.[0]?.path) {
-    iotDev.pathIdentitasAnggota2 = frontendPath(files.identitasAnggota2[0].path);
+
+ if(iotDevBody.namaAnggota1)
+ {
+  if(iotDevBody.pathIdentitasAnggota1)
+  {
+    if(iotDevBody.namaAnggota2 && !iotDevBody.pathIdentitasAnggota2)
+    {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
+    }
   }
-  if (files.identitasKetua?.[0]?.path) {
-    iotDev.pathIdentitasKetua = frontendPath(files.identitasKetua[0].path);
+  else if(!iotDevBody.pathIdentitasAnggota1){
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
   }
-  if (files.buktiUploadTwibbon?.[0]?.path) {
-    iotDev.pathBuktiUploadTwibbon = frontendPath(files.buktiUploadTwibbon[0].path);
-  }
-  if (files.buktiFollowMage?.[0]?.path) {
-    iotDev.pathBuktiFollowMage = frontendPath(files.buktiFollowMage[0].path);
-  }
-  if (files.buktiRepostStory?.[0]?.path) {
-    iotDev.pathBuktiRepostStory = frontendPath(files.buktiRepostStory[0].path);
+ }
+
+  if (!iotDevBody.pathBuktiUploadTwibbon || !iotDevBody.pathBuktiFollowMage || !iotDevBody.pathBuktiRepostStory) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Persyaratan registrasi wajib diupload');
   }
   const cabang = 'idev';
 
@@ -288,16 +222,6 @@ const deleteIotDevById = async (iotDevId, iotDevObj = null, userObj = null) => {
   if (user) {
     user.registeredComp = '';
   }
-  await removeFilePaths([
-    iotDev.pathIdentitasKetua,
-    iotDev.pathIdentitasAnggota1,
-    iotDev.pathIdentitasAnggota2,
-    iotDev.pathBuktiUploadTwibbon,
-    iotDev.pathBuktiFollowMage,
-    iotDev.pathBuktiRepostStory,
-    iotDev.pathProposal,
-    iotDev.pathBuktiBayar,
-  ]);
   await Promise.all([iotDev.remove(), user.save()]);
   return iotDev;
 };
@@ -351,8 +275,6 @@ const decTahap = async (iotDevId) => {
 module.exports = {
   daftarIotDev,
   uploadProposal,
-  multiUploads,
-  multerProposal,
   queryIotDevs,
   createIotDev,
   getIotDevById,

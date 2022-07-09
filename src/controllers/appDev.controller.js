@@ -5,10 +5,10 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 
 const daftarAppDev = catchAsync(async (req, res) => {
-  const { body, files, user } = req;
+  const { body, user } = req;
   await userService.checkEmailVerification(user.id);
   await userService.isRegistered(user.id);
-  const [appDev] = await appDevService.daftarAppDev(body, files, user);
+  const [appDev] = await appDevService.daftarAppDev(body, user);
   res.status(httpStatus.CREATED).send({ appDev });
 });
 
@@ -18,16 +18,16 @@ const updateProfile = catchAsync(async (req, res) => {
 });
 
 const uploadProposal = catchAsync(async (req, res) => {
-  const appDev = await appDevService.uploadProposal(req.user.id, req.files);
+  const appDev = await appDevService.uploadProposal(req.user.id, req.body);
   res.send(appDev);
 });
 
 const createAppDev = catchAsync(async (req, res) => {
   const { userId } = req.params;
-  const { body, files } = req;
+  const { body } = req;
   await userService.checkEmailVerification(userId);
   await userService.isRegistered(userId);
-  const [appDev] = await appDevService.createAppDev(body, files, userId);
+  const [appDev] = await appDevService.createAppDev(body, userId);
   res.status(httpStatus.CREATED).send({ appDev });
 });
 

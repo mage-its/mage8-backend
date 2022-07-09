@@ -1,12 +1,9 @@
 const express = require('express');
-const form = require('multer')().none();
 const validate = require('../../middlewares/validate');
 const olimValidation = require('../../validations/olim.validation');
 const olimController = require('../../controllers/olim.controller');
 const auth = require('../../middlewares/auth');
-const readForm = require('../../middlewares/readForm');
 const removeEmpty = require('../../middlewares/removeEmpty');
-const cancelFileUpload = require('../../middlewares/cancelFileUpload');
 const registerBarrier = require('../../middlewares/registerBarrier');
 
 const router = express.Router();
@@ -17,17 +14,13 @@ router.post(
   '/daftar-olim',
   registerBarrier('olim'),
   auth(),
-  readForm('olim'),
   validate(olimValidation.daftarOlim),
-  removeEmpty,
   olimController.daftarOlim,
-  cancelFileUpload()
 );
 
 router.patch(
   '/update-profile',
   auth(),
-  form,
   validate(olimValidation.updateProfile),
   removeEmpty,
   olimController.updateProfile
@@ -40,17 +33,14 @@ router.get('/', auth('getUsers'), validate(olimValidation.getOlims), olimControl
 router.post(
   '/:userId',
   auth('manageUsers'),
-  readForm('olim'),
   validate(olimValidation.createOlim),
-  removeEmpty,
   olimController.createOlim,
-  cancelFileUpload()
 );
 
 router
   .route('/:olimId')
   .get(auth('getUsers'), validate(olimValidation.getOlim), olimController.getOlim)
-  .patch(auth('manageUsers'), form, validate(olimValidation.updateOlim), removeEmpty, olimController.updateOlim)
+  .patch(auth('manageUsers'), validate(olimValidation.updateOlim), olimController.updateOlim)
   .delete(auth('manageUsers'), validate(olimValidation.deleteOlim), olimController.deleteOlim);
 
 router.post('/toggle-verif/:olimId', auth('manageUsers'), validate(olimValidation.toggleVerif), olimController.toggleVerif);

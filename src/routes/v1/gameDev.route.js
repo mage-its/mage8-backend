@@ -18,23 +18,18 @@ router.post(
   '/daftar-gamedev',
   registerBarrier('devcom'),
   auth(),
-  readForm('gamedev'),
   validate(gameDevValidation.daftarGameDev),
-  removeEmpty,
   gameDevController.daftarGameDev,
-  cancelFileUpload()
 );
 
 router.patch(
   '/update-profile',
   auth(),
-  form,
   validate(gameDevValidation.updateProfile),
-  removeEmpty,
   gameDevController.updateProfile
 );
 
-router.post('/upload-proposal', proposalBarrier(), auth(), readForm('gamedevProposal'), gameDevController.uploadProposal);
+router.post('/upload-proposal', proposalBarrier(), auth(),  gameDevController.uploadProposal);
 
 // Admin route
 
@@ -43,17 +38,14 @@ router.get('/', auth('getUsers'), validate(gameDevValidation.getGameDevs), gameD
 router.post(
   '/:userId',
   auth('manageUsers'),
-  readForm('gamedev'),
   validate(gameDevValidation.createGameDev),
-  removeEmpty,
   gameDevController.createGameDev,
-  cancelFileUpload()
 );
 
 router
   .route('/:gameDevId')
   .get(auth('getUsers'), validate(gameDevValidation.getGameDev), gameDevController.getGameDev)
-  .patch(auth('manageUsers'), form, validate(gameDevValidation.updateGameDev), removeEmpty, gameDevController.updateGameDev)
+  .patch(auth('manageUsers'),  validate(gameDevValidation.updateGameDev),  gameDevController.updateGameDev)
   .delete(auth('manageUsers'), validate(gameDevValidation.deleteGameDev), gameDevController.deleteGameDev);
 
 router.post(
