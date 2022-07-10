@@ -19,6 +19,12 @@ const getCompetition = {
   }),
 };
 
+const checkTeamName = {
+  params: Joi.object().keys({
+    namaTim: Joi.string().required().min(1).max(30),
+  }),
+};
+
 const getCompetitionByUser = {
   params: Joi.object().keys({
     userId: Joi.string().custom(objectId),
@@ -44,4 +50,5 @@ module.exports = {
   getCompetitionByUser,
   downloadCsv,
   submitKarya,
+  checkTeamName,
 };

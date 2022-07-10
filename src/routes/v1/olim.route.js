@@ -10,32 +10,17 @@ const router = express.Router();
 
 // User route
 
-router.post(
-  '/daftar-olim',
-  registerBarrier('olim'),
-  auth(),
-  validate(olimValidation.daftarOlim),
-  olimController.daftarOlim,
-);
+router.post('/daftar-olim', registerBarrier('olim'), auth(), validate(olimValidation.daftarOlim), olimController.daftarOlim);
 
-router.patch(
-  '/update-profile',
-  auth(),
-  validate(olimValidation.updateProfile),
-  removeEmpty,
-  olimController.updateProfile
-);
+router.patch('/update-profile', auth(), validate(olimValidation.updateProfile), removeEmpty, olimController.updateProfile);
+
+router.get('/check-namaTim', auth(), validate(olimValidation.checkTeamName), olimController.checkTeamName);
 
 // Admin route
 
 router.get('/', auth('getUsers'), validate(olimValidation.getOlims), olimController.getOlims);
 
-router.post(
-  '/:userId',
-  auth('manageUsers'),
-  validate(olimValidation.createOlim),
-  olimController.createOlim,
-);
+router.post('/:userId', auth('manageUsers'), validate(olimValidation.createOlim), olimController.createOlim);
 
 router
   .route('/:olimId')

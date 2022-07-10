@@ -19,33 +19,25 @@ router.post(
   registerBarrier('devcom'),
   auth(),
   validate(gameDevValidation.daftarGameDev),
-  gameDevController.daftarGameDev,
+  gameDevController.daftarGameDev
 );
 
-router.patch(
-  '/update-profile',
-  auth(),
-  validate(gameDevValidation.updateProfile),
-  gameDevController.updateProfile
-);
+router.patch('/update-profile', auth(), validate(gameDevValidation.updateProfile), gameDevController.updateProfile);
 
-router.post('/upload-proposal', proposalBarrier(), auth(),  gameDevController.uploadProposal);
+router.get('/check-namaTim', auth(), validate(gameDevValidation.checkTeamName), gameDevController.checkTeamName);
+
+router.post('/upload-proposal', proposalBarrier(), auth(), gameDevController.uploadProposal);
 
 // Admin route
 
 router.get('/', auth('getUsers'), validate(gameDevValidation.getGameDevs), gameDevController.getGameDevs);
 
-router.post(
-  '/:userId',
-  auth('manageUsers'),
-  validate(gameDevValidation.createGameDev),
-  gameDevController.createGameDev,
-);
+router.post('/:userId', auth('manageUsers'), validate(gameDevValidation.createGameDev), gameDevController.createGameDev);
 
 router
   .route('/:gameDevId')
   .get(auth('getUsers'), validate(gameDevValidation.getGameDev), gameDevController.getGameDev)
-  .patch(auth('manageUsers'),  validate(gameDevValidation.updateGameDev),  gameDevController.updateGameDev)
+  .patch(auth('manageUsers'), validate(gameDevValidation.updateGameDev), gameDevController.updateGameDev)
   .delete(auth('manageUsers'), validate(gameDevValidation.deleteGameDev), gameDevController.deleteGameDev);
 
 router.post(

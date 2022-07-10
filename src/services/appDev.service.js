@@ -34,19 +34,15 @@ const daftarAppDev = async (appDevBody, user) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas ketua WAJIB diberikan');
   }
 
- if(appDevBody.namaAnggota1)
- {
-  if(appDevBody.pathIdentitasAnggota1)
-  {
-    if(appDevBody.namaAnggota2 && !appDevBody.pathIdentitasAnggota2)
-    {
+  if (appDevBody.namaAnggota1) {
+    if (appDevBody.pathIdentitasAnggota1) {
+      if (appDevBody.namaAnggota2 && !appDevBody.pathIdentitasAnggota2) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
+      }
+    } else if (!appDevBody.pathIdentitasAnggota1) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
     }
   }
-  else if(!appDevBody.pathIdentitasAnggota1){
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
-  }
- }
 
   if (!appDevBody.pathBuktiUploadTwibbon || !appDevBody.pathBuktiFollowMage || !appDevBody.pathBuktiRepostStory) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Persyaratan registrasi wajib diupload');
@@ -70,10 +66,17 @@ const daftarAppDev = async (appDevBody, user) => {
   return Promise.all([appDev.save(), user.save(), kodeBayarService.incNoUrut(cabang, kode)]);
 };
 
+const checkTeamName = async (namaTim) => {
+  const appDev = await AppDev.findOne({ namaTim });
+  if (appDev) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Nama tim sudah terdaftar');
+  }
+};
+
 /**
  * Upload proposal
  * @param {ObjectId} userId
- * @param {object} requestBody  
+ * @param {object} requestBody
  * @returns {Promise<AppDev>}
  */
 const uploadProposal = async (userId, requestBody) => {
@@ -130,19 +133,15 @@ const createAppDev = async (appDevBody, userId) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas ketua WAJIB diberikan');
   }
 
- if(appDevBody.namaAnggota1)
- {
-  if(appDevBody.pathIdentitasAnggota1)
-  {
-    if(appDevBody.namaAnggota2 && !appDevBody.pathIdentitasAnggota2)
-    {
+  if (appDevBody.namaAnggota1) {
+    if (appDevBody.pathIdentitasAnggota1) {
+      if (appDevBody.namaAnggota2 && !appDevBody.pathIdentitasAnggota2) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
+      }
+    } else if (!appDevBody.pathIdentitasAnggota1) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
     }
   }
-  else if(!appDevBody.pathIdentitasAnggota1){
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
-  }
- }
 
   if (!appDevBody.pathBuktiUploadTwibbon || !appDevBody.pathBuktiFollowMage || !appDevBody.pathBuktiRepostStory) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Persyaratan registrasi wajib diupload');
@@ -237,7 +236,11 @@ const toggleVerif = async (appDevId, username, appDevObj = null) => {
   if (!appDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
-  return updateAppDevById(appDev.id, { isVerified: !appDev.isVerified, verifiedBy: appDev.isVerified? undefined:username }, appDev);
+  return updateAppDevById(
+    appDev.id,
+    { isVerified: !appDev.isVerified, verifiedBy: appDev.isVerified ? undefined : username },
+    appDev
+  );
 };
 
 /**
@@ -288,4 +291,5 @@ module.exports = {
   toggleVerif,
   incTahap,
   decTahap,
+  checkTeamName,
 };

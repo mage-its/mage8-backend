@@ -19,33 +19,24 @@ router.post(
   registerBarrier('devcom'),
   auth(),
   validate(iotDevValidation.daftarIotDev),
-  iotDevController.daftarIotDev,
+  iotDevController.daftarIotDev
 );
 
-router.patch(
-  '/update-profile',
-  auth(),
-  validate(iotDevValidation.updateProfile),
-  iotDevController.updateProfile
-);
+router.patch('/update-profile', auth(), validate(iotDevValidation.updateProfile), iotDevController.updateProfile);
 
-router.post('/upload-proposal', proposalBarrier(), auth(),  iotDevController.uploadProposal);
+router.post('/upload-proposal', proposalBarrier(), auth(), iotDevController.uploadProposal);
 
+router.get('/check-namaTim', auth(), validate(iotDevValidation.checkTeamName), iotDevController.checkTeamName);
 // Admin route
 
 router.get('/', auth('getUsers'), validate(iotDevValidation.getIotDevs), iotDevController.getIotDevs);
 
-router.post(
-  '/:userId',
-  auth('manageUsers'),
-  validate(iotDevValidation.createIotDev),
-  iotDevController.createIotDev,
-);
+router.post('/:userId', auth('manageUsers'), validate(iotDevValidation.createIotDev), iotDevController.createIotDev);
 
 router
   .route('/:iotDevId')
   .get(auth('getUsers'), validate(iotDevValidation.getIotDev), iotDevController.getIotDev)
-  .patch(auth('manageUsers'),  validate(iotDevValidation.updateIotDev),  iotDevController.updateIotDev)
+  .patch(auth('manageUsers'), validate(iotDevValidation.updateIotDev), iotDevController.updateIotDev)
   .delete(auth('manageUsers'), validate(iotDevValidation.deleteIotDev), iotDevController.deleteIotDev);
 
 router.post(

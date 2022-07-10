@@ -88,6 +88,12 @@ const createGameDev = {
   }),
 };
 
+const checkTeamName = {
+  body: Joi.object().keys({
+    namaTim: Joi.string().trim().min(1).max(30).required(),
+  }),
+};
+
 const getGameDevs = {
   query: Joi.object().keys({
     isVerified: Joi.boolean(),
@@ -173,4 +179,5 @@ module.exports = {
   toggleVerif,
   incTahap,
   decTahap,
+  checkTeamName,
 };

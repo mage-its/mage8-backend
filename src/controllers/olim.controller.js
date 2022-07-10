@@ -5,10 +5,10 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 
 const daftarOlim = catchAsync(async (req, res) => {
-  const { body,  user } = req;
+  const { body, user } = req;
   await userService.checkEmailVerification(user.id);
   await userService.isRegistered(user.id);
-  const [olim] = await olimService.daftarOlim(body,  user);
+  const [olim] = await olimService.daftarOlim(body, user);
   res.status(httpStatus.CREATED).send({ olim });
 });
 
@@ -22,8 +22,14 @@ const createOlim = catchAsync(async (req, res) => {
   const { body } = req;
   await userService.checkEmailVerification(userId);
   await userService.isRegistered(userId);
-  const [olim] = await olimService.createOlim(body,  userId);
+  const [olim] = await olimService.createOlim(body, userId);
   res.status(httpStatus.CREATED).send({ olim });
+});
+
+const checkTeamName = catchAsync(async (req, res) => {
+  const { namaTim } = req.body;
+  const result = await olimService.checkTeamName(namaTim);
+  res.send(result);
 });
 
 const getOlims = catchAsync(async (req, res) => {
@@ -53,7 +59,7 @@ const deleteOlim = catchAsync(async (req, res) => {
 
 const toggleVerif = catchAsync(async (req, res) => {
   const thisUser = await userService.getUserById(req.user.id);
-  const olim = await olimService.toggleVerif(req.params.olimId,thisUser.name);
+  const olim = await olimService.toggleVerif(req.params.olimId, thisUser.name);
   res.send(olim);
 });
 
@@ -66,4 +72,5 @@ module.exports = {
   updateOlim,
   deleteOlim,
   toggleVerif,
+  checkTeamName,
 };

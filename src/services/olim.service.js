@@ -27,26 +27,22 @@ const getOlimByNamaTim = async (namaTim) => {
  * @param {User} user
  * @returns {Promise<Array<Promise<Olim>, Promise<User>, Promise<KodeBayar>>>}
  */
-const daftarOlim = async (olimBody,  user) => {
+const daftarOlim = async (olimBody, user) => {
   const olim = new Olim(olimBody);
 
   if (!olimBody.pathIdentitasKetua) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas ketua WAJIB diberikan');
   }
 
- if(olimBody.namaAnggota1)
- {
-  if(olimBody.pathIdentitasAnggota1)
-  {
-    if(olimBody.namaAnggota2 && !olimBody.pathIdentitasAnggota2)
-    {
+  if (olimBody.namaAnggota1) {
+    if (olimBody.pathIdentitasAnggota1) {
+      if (olimBody.namaAnggota2 && !olimBody.pathIdentitasAnggota2) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
+      }
+    } else if (!olimBody.pathIdentitasAnggota1) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
     }
   }
-  else if(!olimBody.pathIdentitasAnggota1){
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
-  }
- }
   olim.user = user.id;
 
   const kode = await kodeBayarService.getKodeBayarByCabang('olim');
@@ -83,6 +79,13 @@ const updateOlimByUserId = async (userId, updateBody, olimObj = null) => {
   return olim.save();
 };
 
+const checkTeamName = async (namaTim) => {
+  const olim = await getOlimByNamaTim(namaTim);
+  if (olim) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Nama tim sudah terdaftar');
+  }
+};
+
 /**
  * Create olim
  * @param {Object} olimBody
@@ -99,19 +102,15 @@ const createOlim = async (olimBody, userId) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas ketua WAJIB diberikan');
   }
 
- if(olimBody.namaAnggota1)
- {
-  if(olimBody.pathIdentitasAnggota1)
-  {
-    if(olimBody.namaAnggota2 && !olimBody.pathIdentitasAnggota2)
-    {
+  if (olimBody.namaAnggota1) {
+    if (olimBody.pathIdentitasAnggota1) {
+      if (olimBody.namaAnggota2 && !olimBody.pathIdentitasAnggota2) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
+      }
+    } else if (!olimBody.pathIdentitasAnggota1) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
     }
   }
-  else if(!olimBody.pathIdentitasAnggota1){
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
-  }
- }
 
   olim.user = user.id;
 
@@ -200,7 +199,7 @@ const toggleVerif = async (olimId, username, olimObj = null) => {
   if (!olim) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
-  return updateOlimById(olim.id, { isVerified: !olim.isVerified, verifiedBy: username}, olim);
+  return updateOlimById(olim.id, { isVerified: !olim.isVerified, verifiedBy: username }, olim);
 };
 
 module.exports = {
@@ -214,4 +213,5 @@ module.exports = {
   updateOlimByUserId,
   deleteOlimById,
   toggleVerif,
+  checkTeamName,
 };

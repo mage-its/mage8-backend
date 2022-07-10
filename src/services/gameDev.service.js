@@ -41,19 +41,15 @@ const daftarGameDev = async (gameDevBody, user) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas ketua WAJIB diberikan');
   }
 
- if(gameDevBody.namaAnggota1)
- {
-  if(gameDevBody.pathIdentitasAnggota1)
-  {
-    if(gameDevBody.namaAnggota2 && !gameDevBody.pathIdentitasAnggota2)
-    {
+  if (gameDevBody.namaAnggota1) {
+    if (gameDevBody.pathIdentitasAnggota1) {
+      if (gameDevBody.namaAnggota2 && !gameDevBody.pathIdentitasAnggota2) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
+      }
+    } else if (!gameDevBody.pathIdentitasAnggota1) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
     }
   }
-  else if(!gameDevBody.pathIdentitasAnggota1){
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
-  }
- }
 
   if (!gameDevBody.pathBuktiUploadTwibbon || !gameDevBody.pathBuktiFollowMage || !gameDevBody.pathBuktiRepostStory) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Persyaratan registrasi wajib diupload');
@@ -77,13 +73,20 @@ const daftarGameDev = async (gameDevBody, user) => {
   return Promise.all([gameDev.save(), user.save(), kodeBayarService.incNoUrut(cabang, kode)]);
 };
 
+const checkTeamName = async (namaTim) => {
+  const gameDev = await GameDev.findOne({ namaTim });
+  if (gameDev) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Nama tim sudah terdaftar');
+  }
+};
+
 /**
  * Upload proposal
  * @param {ObjectId} userId
  * @param {Object} gameDevBody
  * @returns {Promise<GameDev>}
  */
-const uploadProposal = async (userId, gameDevBody ) => {
+const uploadProposal = async (userId, gameDevBody) => {
   const gameDev = await getGameDevByUserId(userId);
   if (!gameDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Peserta tidak ditemukan');
@@ -139,19 +142,15 @@ const createGameDev = async (gameDevBody, userId) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas ketua WAJIB diberikan');
   }
 
- if(gameDevBody.namaAnggota1)
- {
-  if(gameDevBody.pathIdentitasAnggota1)
-  {
-    if(gameDevBody.namaAnggota2 && !gameDevBody.pathIdentitasAnggota2)
-    {
+  if (gameDevBody.namaAnggota1) {
+    if (gameDevBody.pathIdentitasAnggota1) {
+      if (gameDevBody.namaAnggota2 && !gameDevBody.pathIdentitasAnggota2) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
+      }
+    } else if (!gameDevBody.pathIdentitasAnggota1) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
     }
   }
-  else if(!gameDevBody.pathIdentitasAnggota1){
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Identitas semua anggota WAJIB diberikan');
-  }
- }
 
   if (!gameDevBody.pathBuktiUploadTwibbon || !gameDevBody.pathBuktiFollowMage || !gameDevBody.pathBuktiRepostStory) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Persyaratan registrasi wajib diupload');
@@ -247,7 +246,11 @@ const toggleVerif = async (gameDevId, username, gameDevObj = null) => {
   if (!gameDev) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
   }
-  return updateGameDevById(gameDev.id, { isVerified: !gameDev.isVerified, verifiedBy: gameDev.isVerified? undefined:username }, gameDev);
+  return updateGameDevById(
+    gameDev.id,
+    { isVerified: !gameDev.isVerified, verifiedBy: gameDev.isVerified ? undefined : username },
+    gameDev
+  );
 };
 
 /**
@@ -296,4 +299,5 @@ module.exports = {
   toggleVerif,
   incTahap,
   decTahap,
+  checkTeamName,
 };

@@ -15,33 +15,25 @@ router.post(
   registerBarrier('devcom'),
   auth(),
   validate(appDevValidation.daftarAppDev),
-  appDevController.daftarAppDev,
+  appDevController.daftarAppDev
 );
 
-router.patch(
-  '/update-profile',
-  auth(),
-  validate(appDevValidation.updateProfile),
-  appDevController.updateProfile
-);
+router.patch('/update-profile', auth(), validate(appDevValidation.updateProfile), appDevController.updateProfile);
 
 router.post('/upload-proposal', proposalBarrier(), auth(), appDevController.uploadProposal);
+
+router.get('/check-namaTim', auth(), validate(appDevValidation.checkTeamName), appDevController.checkTeamName);
 
 // Admin route
 
 router.get('/', auth('getUsers'), validate(appDevValidation.getAppDevs), appDevController.getAppDevs);
 
-router.post(
-  '/:userId',
-  auth('manageUsers'),
-  validate(appDevValidation.createAppDev),
-  appDevController.createAppDev,
-);
+router.post('/:userId', auth('manageUsers'), validate(appDevValidation.createAppDev), appDevController.createAppDev);
 
 router
   .route('/:appDevId')
   .get(auth('getUsers'), validate(appDevValidation.getAppDev), appDevController.getAppDev)
-  .patch(auth('manageUsers'), validate(appDevValidation.updateAppDev),  appDevController.updateAppDev)
+  .patch(auth('manageUsers'), validate(appDevValidation.updateAppDev), appDevController.updateAppDev)
   .delete(auth('manageUsers'), validate(appDevValidation.deleteAppDev), appDevController.deleteAppDev);
 
 router.post(

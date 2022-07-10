@@ -22,6 +22,12 @@ const uploadProposal = catchAsync(async (req, res) => {
   res.send(iotDev);
 });
 
+const checkTeamName = catchAsync(async (req, res) => {
+  const { namaTim } = req.body;
+  const result = await iotDevService.checkTeamName(namaTim);
+  res.send(result);
+});
+
 const createIotDev = catchAsync(async (req, res) => {
   const { userId } = req.params;
   const { body } = req;
@@ -84,4 +90,5 @@ module.exports = {
   toggleVerif,
   incTahap,
   decTahap,
+  checkTeamName,
 };

@@ -71,6 +71,12 @@ const createOlim = {
   }),
 };
 
+const checkTeamName = {
+  body: Joi.object().keys({
+    namaTim: Joi.string().trim().min(1).max(30).required(),
+  }),
+};
+
 const getOlims = {
   query: Joi.object().keys({
     isVerified: Joi.boolean(),
@@ -135,4 +141,5 @@ module.exports = {
   updateOlim,
   deleteOlim,
   toggleVerif,
+  checkTeamName,
 };

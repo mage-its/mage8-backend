@@ -5,7 +5,7 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 
 const daftarGameDev = catchAsync(async (req, res) => {
-  const { body,  user } = req;
+  const { body, user } = req;
   await userService.checkEmailVerification(user.id);
   await userService.isRegistered(user.id);
   const [gameDev] = await gameDevService.daftarGameDev(body, user);
@@ -17,6 +17,12 @@ const updateProfile = catchAsync(async (req, res) => {
   res.send(gameDev);
 });
 
+const checkTeamName = catchAsync(async (req, res) => {
+  const { namaTim } = req.body;
+  const result = await gameDevService.checkTeamName(namaTim);
+  res.send(result);
+});
+
 const uploadProposal = catchAsync(async (req, res) => {
   const gameDev = await gameDevService.uploadProposal(req.user.id, req.body);
   res.send(gameDev);
@@ -24,7 +30,7 @@ const uploadProposal = catchAsync(async (req, res) => {
 
 const createGameDev = catchAsync(async (req, res) => {
   const { userId } = req.params;
-  const { body} = req;
+  const { body } = req;
   await userService.checkEmailVerification(userId);
   await userService.isRegistered(userId);
   const [gameDev] = await gameDevService.createGameDev(body, userId);
@@ -84,4 +90,5 @@ module.exports = {
   toggleVerif,
   incTahap,
   decTahap,
+  checkTeamName,
 };
