@@ -19,13 +19,12 @@ const daftarAppDev = {
       alamatInstansi: Joi.string().trim().min(1).max(100).required(),
       asalKota: Joi.string().trim().min(1).max(100).required(),
       asalInfo: Joi.string().trim().min(1).max(100).required(),
-      pathIdentitasKetua: Joi.string().trim().min(1).max(100).required(),
-      pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),
-      pathIdentitasAnggota2: Joi.string().trim().min(1).max(100),
-      pathBuktiFollowMage: Joi.string().trim().min(1).max(100).required(),
-      pathBuktiUploadTwibbon: Joi.string().trim().min(1).max(100).required(),
-      pathBuktiRepostStory: Joi.string().trim().min(1).max(100).required(),
-      
+      pathIdentitasKetua: Joi.string().trim().min(1).required(),
+      pathIdentitasAnggota1: Joi.string().trim().min(1),
+      pathIdentitasAnggota2: Joi.string().trim().min(1),
+      pathBuktiFollowMage: Joi.string().trim().min(1).required(),
+      pathBuktiUploadTwibbon: Joi.string().trim().min(1).required(),
+      pathBuktiRepostStory: Joi.string().trim().min(1).required(),
     })
     .with('namaAnggota2', 'namaAnggota1'),
 };
