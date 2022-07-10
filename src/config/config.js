@@ -104,4 +104,5 @@ module.exports = {
     paymentOlim: envVars.CLOSE_PAYMENT_OLIM === 'true',
     submitKarya: envVars.CLOSE_SUBMIT_KARYA === 'true',
   },
+  rajaOngkirKey: envVars.RAJA_ONGKIR_API_KEY,
 };

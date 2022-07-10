@@ -15,6 +15,7 @@ const linkShortenerRoute = require('./linkShortener.route');
 const webinarRoute = require('./webinar.route');
 const workshopRoute = require('./workshop.route');
 const linkShortenerController = require('../../controllers/linkShortener.controller');
+const wilayahRoute = require('./wilayah.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -65,17 +66,21 @@ const defaultRoutes = [
     route: tokenRoute,
   },
   {
-    path:'/linkshortener',
+    path: '/linkshortener',
     route: linkShortenerRoute,
   },
   {
-    path:'/webinar',
+    path: '/webinar',
     route: webinarRoute,
   },
   {
-    path:'/workshop',
+    path: '/workshop',
     route: workshopRoute,
-  }
+  },
+  {
+    path: '/wilayah',
+    route: wilayahRoute,
+  },
 ];
 
 const devRoutes = [
@@ -96,7 +101,6 @@ defaultRoutes.forEach((route) => {
   router.use(route.path, route.route);
 });
 
-router.get('/:slug', linkShortenerController.requestHandler )
-
+router.get('/:slug', linkShortenerController.requestHandler);
 
 module.exports = router;

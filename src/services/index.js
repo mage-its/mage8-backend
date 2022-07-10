@@ -14,4 +14,4 @@ module.exports.announcementService = require('./announcement.service');
 module.exports.linkShortenerService = require('./linkShortener.service');
 module.exports.webinarService = require('./webinar.service');
 module.exports.workshopService = require('./workshop.service');
-
+module.exports.wilayahService = require('./wilayah.service');
