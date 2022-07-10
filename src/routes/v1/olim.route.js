@@ -14,7 +14,7 @@ router.post('/daftar-olim', registerBarrier('olim'), auth(), validate(olimValida
 
 router.patch('/update-profile', auth(), validate(olimValidation.updateProfile), removeEmpty, olimController.updateProfile);
 
-router.get('/check-namaTim', auth(), validate(olimValidation.checkTeamName), olimController.checkTeamName);
+router.post('/check-namaTim', auth(), validate(olimValidation.checkTeamName), olimController.checkTeamName);
 
 // Admin route
 

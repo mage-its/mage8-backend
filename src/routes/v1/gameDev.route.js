@@ -24,7 +24,7 @@ router.post(
 
 router.patch('/update-profile', auth(), validate(gameDevValidation.updateProfile), gameDevController.updateProfile);
 
-router.get('/check-namaTim', auth(), validate(gameDevValidation.checkTeamName), gameDevController.checkTeamName);
+router.post('/check-namaTim', auth(), validate(gameDevValidation.checkTeamName), gameDevController.checkTeamName);
 
 router.post('/upload-proposal', proposalBarrier(), auth(), gameDevController.uploadProposal);
 

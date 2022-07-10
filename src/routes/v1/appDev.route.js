@@ -22,7 +22,7 @@ router.patch('/update-profile', auth(), validate(appDevValidation.updateProfile)
 
 router.post('/upload-proposal', proposalBarrier(), auth(), appDevController.uploadProposal);
 
-router.get('/check-namaTim', auth(), validate(appDevValidation.checkTeamName), appDevController.checkTeamName);
+router.post('/check-namaTim', auth(), validate(appDevValidation.checkTeamName), appDevController.checkTeamName);
 
 // Admin route
 
