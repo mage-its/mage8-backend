@@ -14,6 +14,7 @@ const daftarOlim = {
       asalInstansi: Joi.string().trim().min(1).max(100).required(),
       alamatInstansi: Joi.string().trim().min(1).max(100).required(),
       asalKota: Joi.string().trim().min(1).max(100).required(),
+      asalProvinsi: Joi.string().trim().min(1).max(100).required(),
       asalInfo: Joi.string().trim().min(1).max(100).required(),
       pathIdentitasKetua: Joi.string().trim().min(1).max(100).required(),
       pathIdentitasAnggota1: Joi.string().trim().min(1).max(100),

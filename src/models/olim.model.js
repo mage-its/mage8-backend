@@ -70,6 +70,10 @@ const olimSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    asalProvinsi: {
+      type: String,
+      required: true,
+    },
     asalInfo: {
       type: String,
       required: true,
@@ -102,7 +106,7 @@ const olimSchema = mongoose.Schema(
       type: String,
       default: null,
     },
-    verifiedBy:{
+    verifiedBy: {
       type: String,
     },
     user: {

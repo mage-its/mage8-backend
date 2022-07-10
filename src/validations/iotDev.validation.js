@@ -21,6 +21,7 @@ const daftarIotDev = {
       asalInstansiAnggota2: Joi.string().trim().allow('').max(100),
       alamatInstansiAnggota2: Joi.string().trim().allow('').max(100),
       asalKota: Joi.string().trim().min(1).max(100).required(),
+      asalProvinsi: Joi.string().trim().min(1).max(100).required(),
       asalInfo: Joi.string().trim().min(1).max(100).required(),
       pathIdentitasKetua: Joi.string().trim().min(1).required(),
       pathIdentitasAnggota1: Joi.string().trim().min(1),

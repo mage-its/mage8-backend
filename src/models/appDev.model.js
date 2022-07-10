@@ -100,6 +100,10 @@ const appDevSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    asalProvinsi: {
+      type: String,
+      required: true,
+    },
     asalInfo: {
       type: String,
       required: true,
@@ -144,8 +148,8 @@ const appDevSchema = mongoose.Schema(
       type: Number,
       default: 1,
     },
-    verifiedBy:{
-      type : String,
+    verifiedBy: {
+      type: String,
     },
     user: {
       type: mongoose.SchemaTypes.ObjectId,
