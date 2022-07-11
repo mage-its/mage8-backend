@@ -4,6 +4,7 @@ const { objectId, urlWithProtocol } = require('./custom.validation');
 const pay = {
   body: Joi.object().keys({
     namaBayar: Joi.string().required().min(1).max(30),
+    pathBuktiBayar: Joi.string().required(),
   }),
 };
 

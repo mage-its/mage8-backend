@@ -21,15 +21,7 @@ router.get(
   compeController.getCompetitionByUser
 );
 
-router.post(
-  '/pay',
-  auth(),
-  paymentBarrier(),
-  readForm('payment'),
-  validate(compeValidation.pay),
-  compeController.pay,
-  cancelFileUpload()
-);
+router.post('/pay', auth(), paymentBarrier(), validate(compeValidation.pay), compeController.pay);
 
 router.post(
   '/toggle-verif/:compeId',

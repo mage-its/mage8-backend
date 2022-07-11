@@ -5,7 +5,7 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 
 const pay = catchAsync(async (req, res) => {
-  const compe = await compeService.pay(req.user.id, req.body.namaBayar, req.files);
+  const compe = await compeService.pay(req.user.id, req.body.namaBayar, req.body.pathBuktiBayar);
   res.send(compe);
 });
 

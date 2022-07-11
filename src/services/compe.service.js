@@ -5,7 +5,6 @@ const { parseAsync } = require('json2csv');
 const { Olim, GameDev, IotDev, AppDev } = require('../models');
 const config = require('../config/config');
 const ApiError = require('../utils/ApiError');
-const frontendPath = require('../utils/frontendPath');
 const { isImageOrPdf } = require('../utils/isImageOrPdf');
 const { userService, olimService, gameDevService, appDevService, iotDevService } = require('.');
 
@@ -43,8 +42,8 @@ const compeModels = {
  * @param {Object} files
  * @returns {Promise<AppDev|GameDev|IotDev|Olim>}
  */
-const pay = async (userId, namaBayar, files) => {
-  if (!files.buktiBayar) {
+const pay = async (userId, namaBayar, pathBuktiBayar) => {
+  if (pathBuktiBayar) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Bukti pembayaran WAJIB disertakan!');
   }
 
@@ -68,7 +67,7 @@ const pay = async (userId, namaBayar, files) => {
   if (compe.sudahUploadBuktiBayar) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'User sudah mengupload bukti bayar!');
   }
-  compe.pathBuktiBayar = frontendPath(files.buktiBayar[0].path, 3);
+  compe.pathBuktiBayar = pathBuktiBayar;
   compe.namaBayar = namaBayar;
   return compe.save();
 };
@@ -167,7 +166,7 @@ const getCompeByNamaTim = async (namaTim) => {
  * @param {ObjectId} compeId
  * @returns {Promise<Olim|GameDev|AppDev|IotDev>}
  */
-const toggleVerif = async (compeId,username) => {
+const toggleVerif = async (compeId, username) => {
   const [compe, index] = await getCompeById(compeId);
   if (!compe || index === -1) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
