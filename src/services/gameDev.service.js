@@ -100,6 +100,7 @@ const uploadProposal = async (userId, gameDevBody) => {
   if (!gameDevBody.pathProposal) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'File proposal harus diupload');
   }
+  gameDev.pathProposal = gameDevBody.pathProposal;
   // Delete proposal if exist
   return gameDev.save();
 };

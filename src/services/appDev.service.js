@@ -90,6 +90,7 @@ const uploadProposal = async (userId, requestBody) => {
   if (!requestBody.pathProposal) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'File proposal harus diupload');
   }
+  appDev.pathProposal = requestBody.pathProposal;
   return appDev.save();
 };
 

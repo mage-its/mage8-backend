@@ -90,6 +90,7 @@ const uploadProposal = async (userId, iotDevBody) => {
   if (!iotDevBody.proposal?.[0]?.path) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'File proposal harus diupload');
   }
+  iotDev.pathProposal = iotDevBody.pathProposal;
   // Delete proposal if exist
   return iotDev.save();
 };
