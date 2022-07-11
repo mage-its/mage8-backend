@@ -33,8 +33,8 @@ const paginate = (schema) => {
     }
 
     const limit = options.limit && parseInt(options.limit, 10) > 0 ? parseInt(options.limit, 10) : 10;
-    const page = options.page && parseInt(options.page, 10) > 0 ? parseInt(options.page, 10) : 1;
-    const skip = (page - 1) * limit;
+    const page = options.page > 0 ? options.page : 0;
+    const skip = page * limit;
 
     const countPromise = this.countDocuments(filter).exec();
     let docsPromise = this.find(filter).sort(sort).skip(skip).limit(limit);
