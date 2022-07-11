@@ -43,7 +43,7 @@ const compeModels = {
  * @returns {Promise<AppDev|GameDev|IotDev|Olim>}
  */
 const pay = async (userId, namaBayar, pathBuktiBayar) => {
-  if (pathBuktiBayar) {
+  if (!pathBuktiBayar) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Bukti pembayaran WAJIB disertakan!');
   }
 
