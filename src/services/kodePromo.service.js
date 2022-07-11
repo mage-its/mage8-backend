@@ -43,7 +43,7 @@ const getKodePromoById = async (id) => {
  * @returns {Promise<KodePromo>}
  */
 const getKodePromoByKode = async (kode) => {
-  const kodePromo = await KodePromo.findOne({ kode});
+  const kodePromo = await KodePromo.findOne({ kode });
   if (!kodePromo) {
     throw new ApiError(httpStatus.NOT_FOUND, `Kode promo dengan kode ${kode} tidak ditemukan`);
   }
@@ -158,7 +158,7 @@ const applyPromo = async (kode, user, compe) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Kode promo sudah tidak berlaku');
   }
   if (compe.usedPromo) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Anda sudah pernah menggunakan kode promo !!!!!');
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Kamu sudah pernah menggunakan kode promo');
   }
 
   const price = compe.price - kodePromo.discountPrice;
