@@ -4,12 +4,12 @@ const { LinkShortener } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 const queryLinkShortener = async (filter, options) => {
-  //const link = await LinkShortener.paginate(filter, options);
+  // const link = await LinkShortener.paginate(filter, options);
   return await LinkShortener.paginate(filter, options);
 };
 
 const getLinkShortenerBySlug = async (slug) => {
-  const link = await LinkShortener.findOne({ slug: slug });
+  const link = await LinkShortener.findOne({ slug });
   if (!link) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Link tidak ditemukan!');
   }

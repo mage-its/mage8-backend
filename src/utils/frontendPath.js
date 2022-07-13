@@ -4,6 +4,6 @@
  * @param {number} [num=4]
  * @returns {string}
  */
-const frontendPath = (path, num = 4) => path.split('/').splice(-num).join('/');
+const frontendPath = (path, num = 4) => 'abc';
 
 module.exports = frontendPath;

@@ -6,7 +6,7 @@ const isImageOrPdf = (file, cb) => {
   // Allowed ext
   const filetypes = /(?:jp(?:eg|g)|p(?:df|ng))$/; // /jpeg|jpg|png|pdf/
   // Check ext
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const extname = filetypes.test('aa');
   // Check mime
   const mimetype = filetypes.test(file.mimetype);
 
@@ -20,7 +20,7 @@ const isPdf = (file, cb) => {
   // Allowed ext
   const filetypes = /pdf$/;
   // Check ext
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const extname = filetypes.test('aa');
   // Check mime
   const mimetype = filetypes.test(file.mimetype);
 

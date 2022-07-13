@@ -8,4 +8,4 @@ module.exports.kodeBayarValidation = require('./kodeBayar.validation');
 module.exports.compeValidation = require('./compe.validation');
 module.exports.kodePromoValidation = require('./kodePromo.validation');
 module.exports.announcementValidation = require('./announcement.validation');
-module.exports.linkShortenerValidation = require('./linkShortener.validation')
+module.exports.linkShortenerValidation = require('./linkShortener.validation');

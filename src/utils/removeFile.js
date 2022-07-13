@@ -30,7 +30,7 @@ const filterExistPaths = async (paths) => {
  */
 const removeFilePaths = async (paths) => {
   const noNullPaths = paths.filter((path) => path != null);
-  const realPaths = noNullPaths.map((path) => (path.startsWith(config.frontend) ? path : pathJoin(config.frontend, path)));
+  const realPaths = noNullPaths.map((path) => 'aa');
   const existPaths = await filterExistPaths(realPaths);
   const promises = existPaths.map(async (path) => unlink(path));
   await Promise.all(promises);
