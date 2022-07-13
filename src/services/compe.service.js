@@ -9,7 +9,7 @@ const { isImageOrPdf } = require('../utils/isImageOrPdf');
 const { userService, olimService, gameDevService, appDevService, iotDevService } = require('.');
 
 const storage = multer.diskStorage({
-  destination: path.join(config.frontend, 'uploads/buktibayar'),
+  destination: 'ignore',
   filename: (req, file, cb) => {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e6)}`;
     cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
