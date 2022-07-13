@@ -1,4 +1,12 @@
-const { olimService, gameDevService, compeService, appDevService, iotDevService, webinarService, workshopService } = require('../services');
+const {
+  olimService,
+  gameDevService,
+  compeService,
+  appDevService,
+  iotDevService,
+  webinarService,
+  workshopService,
+} = require('../services');
 
 const uploads = {
   olim: olimService.multiUploads,

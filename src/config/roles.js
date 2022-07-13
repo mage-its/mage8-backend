@@ -1,6 +1,15 @@
 const allRoles = {
   user: [],
-  admin: ['getUsers', 'manageUsers', 'getKodeBayar', 'manageKodeBayar', 'getKodePromo', 'manageKodePromo', 'manageLinkShortener', 'getLinkShortener'],
+  admin: [
+    'getUsers',
+    'manageUsers',
+    'getKodeBayar',
+    'manageKodeBayar',
+    'getKodePromo',
+    'manageKodePromo',
+    'manageLinkShortener',
+    'getLinkShortener',
+  ],
   staff: ['getUsers', 'getKodeBayar', 'getKodePromo', 'getLinkShortener'],
 };
 

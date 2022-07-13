@@ -6,9 +6,6 @@ const readForm = require('../../middlewares/readForm');
 
 const router = express.Router();
 
-router
-  .route('/')
-  .post(readForm('workshop'),workshopController.daftarWorkshop)
-  .get(workshopController.getWorkshops);
+router.route('/').post(readForm('workshop'), workshopController.daftarWorkshop).get(workshopController.getWorkshops);
 
 module.exports = router;

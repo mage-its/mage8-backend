@@ -10,7 +10,7 @@ const userService = require('./user.service');
  * @returns {Promise<KodePromo>}
  */
 const createKodePromo = async (kodePromoBody) => {
-  return await KodePromo.create(kodePromoBody);
+  return KodePromo.create(kodePromoBody);
 };
 
 /**
