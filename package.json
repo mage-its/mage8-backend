@@ -52,6 +52,7 @@
     "prettier"
   ],
   "dependencies": {
+    "@google-cloud/secret-manager": "^4.0.0",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "content-filter": "^1.1.2",
