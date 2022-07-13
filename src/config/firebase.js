@@ -11,7 +11,8 @@ client
   })
   .then(async (response) => {
     const secret = response[0];
-    const secretData = secret.payload.data;
+    const { data } = secret.payload;
+    const secretData = JSON.parse(data);
     if (config.env !== 'ci') {
       admin.initializeApp({
         credential: admin.credential.cert(secretData),
