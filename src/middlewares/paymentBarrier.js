@@ -9,56 +9,73 @@ const { getKodeBayarByCabang } = require('../services/kodeBayar.service');
 //   olim: 'paymentOlim',
 // };
 
-const paymentBarrier = () => (req, res, next) => {
+const paymentBarrier = () => async(req, res, next) => {
   if(req.user.registeredComp==='olim'){
-    const kodebayar = getKodeBayarByCabang(olim);
-    if(kodebayar.isPaymentClose){
-      req.status(httpStatus.FORBIDDEN).send({
-        code: httpStatus.FORBIDDEN,
-        message: 'Pembayaran Olimpiade Sudah Ditutup!'
-      })
+    try {
+      const kodebayar = await getKodeBayarByCabang("olim");
+      if(kodebayar.isPaymentClose){
+        res.status(httpStatus.FORBIDDEN).send({
+          code: httpStatus.FORBIDDEN,
+          message: 'Pembayaran Olimpiade Sudah Ditutup!'
+        })
+      }
+      else next();
+    } catch (error) {
+      res.status(httpStatus.NOT_FOUND).send(error.message)
     }
-    else next();
   }
 
   else if(req.user.registeredComp==='gamedev'){
     const id = req.user.id;
-    const compe = getCompeByUserId(id);
-    const cabang = compe.kategori === "Siswa" ? "gdevs" : "gdevm";
-    const kodebayar = getKodeBayarByCabang(cabang);
-    if(kodebayar.isPaymentClose){
-      req.status(httpStatus.FORBIDDEN).send({
-        code: httpStatus.FORBIDDEN,
-        message: 'Pembayaran Development Competition Sudah Ditutup!'
-      })
+    try {
+      const compe = await getCompeByUserId(id);
+      const cabang = compe.kategori === "Siswa" ? "gdevs" : "gdevm";
+      const kodebayar = await getKodeBayarByCabang(cabang);
+      if(kodebayar.isPaymentClose){
+        res.status(httpStatus.FORBIDDEN).send({
+          code: httpStatus.FORBIDDEN,
+          message: 'Pembayaran Olimpiade Sudah Ditutup!'
+        })
+      }
+      else next();
+    } catch (error) {
+      res.status(httpStatus.NOT_FOUND).send(error.message)
     }
-    else next();
   }
+    
 
   else if(req.user.registeredComp==='appdev'){
     const id = req.user.id;
-    const compe = getCompeByUserId(id);
-    const cabang = compe.kategori === "Siswa" ? "adevs" : "adevm";
-    const kodebayar = getKodeBayarByCabang(cabang);
-    if(kodebayar.isPaymentClose){
-      req.status(httpStatus.FORBIDDEN).send({
-        code: httpStatus.FORBIDDEN,
-        message: 'Pembayaran Development Competition Sudah Ditutup!'
-      })
+    try {
+      const compe = await getCompeByUserId(id);
+      const cabang = compe.kategori === "Siswa" ? "adevs" : "adevm";
+      const kodebayar = await getKodeBayarByCabang(cabang);
+      if(kodebayar.isPaymentClose){
+        res.status(httpStatus.FORBIDDEN).send({
+          code: httpStatus.FORBIDDEN,
+          message: 'Pembayaran Development Competition Sudah Ditutup!'
+        })
+      }
+      else next();
+    } catch (error) {
+      res.status(httpStatus.NOT_FOUND).send(error.message)
     }
-    else next();
   }
 
   else if(req.user.registeredComp==='iotdev'){
     const cabang = "idev";
-    const kodebayar = getKodeBayarByCabang(cabang);
-    if(kodebayar.isPaymentClose){
-      req.status(httpStatus.FORBIDDEN).send({
-        code: httpStatus.FORBIDDEN,
-        message: 'Pembayaran Development Competition Sudah Ditutup!'
-      })
+    try {
+      const kodebayar = await getKodeBayarByCabang(cabang);
+      if(kodebayar.isPaymentClose){
+        res.status(httpStatus.FORBIDDEN).send({
+          code: httpStatus.FORBIDDEN,
+          message: 'Pembayaran Development Competition Sudah Ditutup!'
+        })
+      }
+      else next();
+    } catch (error) {
+      res.status(httpStatus.NOT_FOUND).send(error.message)
     }
-    else next();
   }
 
   // if (config.close[cat[req?.user?.registeredComp]]) {
