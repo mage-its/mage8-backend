@@ -40,7 +40,7 @@ const paymentBarrier = async(registeredComp,id) => {
   if(registeredComp === "gamedev"){
     try {
       const compe = await getCompeByUserId(id);
-      const cabang = compe.kategori === "Siswa" ? "adevs" : "adevm";
+      const cabang = compe.kategori === "Siswa" ? "gdevs" : "gdevm";
       const kodebayar = await getKodeBayarByCabang(cabang);
       if(kodebayar.isPaymentClose){
         return undefined;
