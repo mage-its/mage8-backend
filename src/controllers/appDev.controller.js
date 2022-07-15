@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const { userService, appDevService } = require('../services');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
+const proposalBarrier = require('../middlewares/proposalBarrier')
 
 const daftarAppDev = catchAsync(async (req, res) => {
   const { body, user } = req;
@@ -18,6 +19,7 @@ const updateProfile = catchAsync(async (req, res) => {
 });
 
 const uploadProposal = catchAsync(async (req, res) => {
+  proposalBarrier(req.user.registeredComp);
   const appDev = await appDevService.uploadProposal(req.user.id, req.body);
   res.send(appDev);
 });

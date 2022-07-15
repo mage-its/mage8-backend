@@ -3,12 +3,9 @@ const config = require('../config/config');
 const { getCompeByUserId } = require('../services/compe.service');
 const { getKodeBayarByCabang } = require('../services/kodeBayar.service');
 
-const submitKaryaBarrier = () => async(req, res, next) => {
-  if(req.user.registeredComp==='gamedev'){
-    const id = req.user.id;
+const submitKaryaBarrier = (cabang) => async(req, res, next) => {
+  if(cabang==='gdevm'){
     try {
-      const compe = await getCompeByUserId(id);
-      const cabang = compe.kategori === "Siswa" ? "gdevs" : "gdevm";
       const kodebayar = await getKodeBayarByCabang(cabang);
       if(kodebayar.isKaryaClose){
         res.status(httpStatus.FORBIDDEN).send({
@@ -22,11 +19,8 @@ const submitKaryaBarrier = () => async(req, res, next) => {
     }
   }
 
-  else if(req.user.registeredComp==='appdev'){
-    const id = req.user.id;
+  else if(cabang==='adevm'){
     try {
-      const compe = await getCompeByUserId(id);
-      const cabang = compe.kategori === "Siswa" ? "adevs" : "adevm";
       const kodebayar = await getKodeBayarByCabang(cabang);
       if(kodebayar.isKaryaClose){
         res.status(httpStatus.FORBIDDEN).send({
@@ -40,8 +34,7 @@ const submitKaryaBarrier = () => async(req, res, next) => {
     }
   }
 
-  else if(req.user.registeredComp==='iotdev'){
-    const cabang = "idev";
+  else if(cabang==='idev'){
     try {
       const kodebayar = await getKodeBayarByCabang(cabang);
       if(kodebayar.isKaryaClose){
