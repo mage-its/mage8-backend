@@ -19,7 +19,7 @@ router.get(
   compeController.getCompetitionByUser
 );
 
-router.post('/pay', auth(), paymentBarrier(), validate(compeValidation.pay), compeController.pay);
+router.post('/pay', auth(), validate(compeValidation.pay), compeController.pay);
 
 router.post(
   '/toggle-verif/:compeId',

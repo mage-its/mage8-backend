@@ -3,10 +3,20 @@ const catchAsync = require('../utils/catchAsync');
 const { userService, compeService } = require('../services');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
+const paymentBarrier = require("../middlewares/paymentBarrier")
 
 const pay = catchAsync(async (req, res) => {
-  const compe = await compeService.pay(req.user.id, req.body.namaBayar, req.body.pathBuktiBayar);
-  res.send(compe);
+  const payment = await paymentBarrier(req.user.registeredComp, req.user.id);
+  if(!payment){
+    res.status(httpStatus.FORBIDDEN).send({
+      code: httpStatus.FORBIDDEN,
+      message: 'Masa Pembayaran Telah Lewat!'
+    })
+  }
+  else{
+    const compe = await compeService.pay(req.user.id, req.body.namaBayar, req.body.pathBuktiBayar);
+    res.send(compe);
+  }
 });
 
 const toggleVerif = catchAsync(async (req, res) => {
