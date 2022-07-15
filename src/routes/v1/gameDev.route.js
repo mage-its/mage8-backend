@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.post(
   '/daftar-gamedev',
-  registerBarrier('devcom'),
+  registerBarrier('gamedev'),
   auth(),
   validate(gameDevValidation.daftarGameDev),
   gameDevController.daftarGameDev

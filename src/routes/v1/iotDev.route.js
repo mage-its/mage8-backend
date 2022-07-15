@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.post(
   '/daftar-iotdev',
-  registerBarrier('devcom'),
+  registerBarrier('iotdev'),
   auth(),
   validate(iotDevValidation.daftarIotDev),
   iotDevController.daftarIotDev

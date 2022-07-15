@@ -19,9 +19,6 @@ const daftarOlim = {
       pathIdentitasKetua: Joi.string().trim().min(1).required(),
       pathIdentitasAnggota1: Joi.string().trim().min(1),
       pathIdentitasAnggota2: Joi.string().trim().min(1),
-      pathBuktiFollowMage: Joi.string().trim().min(1).required(),
-      pathBuktiUploadTwibbon: Joi.string().trim().min(1).required(),
-      pathBuktiRepostStory: Joi.string().trim().min(1).required(),
     })
     .with('namaAnggota2', 'namaAnggota1'),
 };

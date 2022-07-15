@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.post(
   '/daftar-appdev',
-  registerBarrier('devcom'),
+  registerBarrier('appdev'),
   auth(),
   validate(appDevValidation.daftarAppDev),
   appDevController.daftarAppDev
