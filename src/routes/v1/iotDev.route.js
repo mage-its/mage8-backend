@@ -24,7 +24,7 @@ router.post(
 
 router.patch('/update-profile', auth(), validate(iotDevValidation.updateProfile), iotDevController.updateProfile);
 
-router.post('/upload-proposal', proposalBarrier(), auth(), iotDevController.uploadProposal);
+router.post('/upload-proposal', proposalBarrier("idev"), auth(), iotDevController.uploadProposal);
 
 router.post('/check-namaTim', auth(), validate(iotDevValidation.checkTeamName), iotDevController.checkTeamName);
 // Admin route

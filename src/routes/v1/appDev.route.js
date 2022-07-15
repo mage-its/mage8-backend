@@ -20,7 +20,7 @@ router.post(
 
 router.patch('/update-profile', auth(), validate(appDevValidation.updateProfile), appDevController.updateProfile);
 
-router.post('/upload-proposal', proposalBarrier(), auth(), appDevController.uploadProposal);
+router.post('/upload-proposal', proposalBarrier("adevm"), auth(), appDevController.uploadProposal);
 
 router.post('/check-namaTim', auth(), validate(appDevValidation.checkTeamName), appDevController.checkTeamName);
 
