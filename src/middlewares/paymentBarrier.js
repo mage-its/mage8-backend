@@ -37,7 +37,7 @@ const paymentBarrier = async(registeredComp,id) => {
     }
   }
 
-  if(registeredComp === "gameev"){
+  if(registeredComp === "gamedev"){
     try {
       const compe = await getCompeByUserId(id);
       const cabang = compe.kategori === "Siswa" ? "adevs" : "adevm";
