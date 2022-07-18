@@ -1,277 +1,485 @@
 const verificationTemplate = String.raw`
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <style type="text/css">
-        /* CLIENT-SPECIFIC STYLES */
-        body,
-        table,
-        td,
-        a {
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-        }
-        table,
-        td {
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
-        }
-        table {
-            border-collapse: collapse !important;
-        }
-        body {
-            height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
-        }
-        /* iOS BLUE LINKS */
-        a[x-apple-data-detectors] {
-            color: inherit !important;
-            text-decoration: none !important;
-            font-size: inherit !important;
-            font-family: inherit !important;
-            font-weight: inherit !important;
-            line-height: inherit !important;
-        }
-        /* MOBILE STYLES */
-        @media screen and (max-width:600px) {
-            h1 {
-                font-size: 32px !important;
-                line-height: 32px !important;
-            }
-        }
-        /* ANDROID CENTER FIX */
-        div[style*="margin: 16px 0;"] {
-            margin: 0 !important;
-        }
-    </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--[if !mso]><!-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!--<![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title></title>
+<style type="text/css">
+* {
+	-webkit-font-smoothing: antialiased;
+}
+body {
+	Margin: 0;
+	padding: 0;
+	min-width: 100%;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	mso-line-height-rule: exactly;
+}
+table {
+	border-spacing: 0;
+	color: #333333;
+	font-family: Arial, sans-serif;
+}
+img {
+	border: 0;
+}
+.wrapper {
+	width: 100%;
+	table-layout: fixed;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+.webkit {
+	max-width: 600px;
+}
+.outer {
+	Margin: 0 auto;
+	width: 100%;
+	max-width: 600px;
+}
+.full-width-image img {
+	width: 100%;
+	max-width: 600px;
+	height: auto;
+}
+.inner {
+	padding: 10px;
+}
+p {
+	Margin: 0;
+	padding-bottom: 10px;
+}
+.h1 {
+	font-size: 21px;
+	font-weight: bold;
+	Margin-top: 15px;
+	Margin-bottom: 5px;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+.h2 {
+	font-size: 18px;
+	font-weight: bold;
+	Margin-top: 10px;
+	Margin-bottom: 5px;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+.one-column .contents {
+	text-align: left;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+.one-column p {
+	font-size: 14px;
+	Margin-bottom: 10px;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+.two-column {
+	text-align: center;
+	font-size: 0;
+}
+.two-column .column {
+	width: 100%;
+	max-width: 300px;
+	display: inline-block;
+	vertical-align: top;
+}
+.contents {
+	width: 100%;
+}
+.two-column .contents {
+	font-size: 14px;
+	text-align: left;
+}
+.two-column img {
+	width: 100%;
+	max-width: 280px;
+	height: auto;
+}
+.two-column .text {
+	padding-top: 10px;
+}
+.three-column {
+	text-align: center;
+	font-size: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.three-column .column {
+	width: 100%;
+	max-width: 200px;
+	display: inline-block;
+	vertical-align: top;
+}
+.three-column .contents {
+	font-size: 14px;
+	text-align: center;
+}
+.three-column img {
+	width: 100%;
+	max-width: 180px;
+	height: auto;
+}
+.three-column .text {
+	padding-top: 10px;
+}
+.img-align-vertical img {
+	display: inline-block;
+	vertical-align: middle;
+}
+@media only screen and (max-device-width: 480px) {
+	table[class=hide], img[class=hide], td[class=hide] {
+		display: none !important;
+	}
+	.contents1 {
+		width: 100%;
+	}
+	.contents1 {
+		width: 100%;
+	}
+}
+</style>
 </head>
-<body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
-    <!-- HIDDEN PREHEADER TEXT -->
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> We're thrilled to have you here! Get ready to dive into your new account. </div>
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <!-- LOGO -->
-        <tr>
-            <td bgcolor="#ff4655" align="center">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td align="center" valign="top" style="padding: 40px 10px 40px 10px;"> </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#ff4655" align="center" style="padding: 0px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
-                            <h1 style="font-size: 48px; font-weight: 400; margin: 2;">Selamat Datang!</h1>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#1a1a1a" align="center" style="padding: 0px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left" style="padding: 20px 30px 40px 30px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Terima kasih telah bersedia untuk mendaftar MAGE 7. Pertama, anda perlu untuk mengonfirmasi akun anda. Cukup dengan menekan tombol berikut.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left">
-                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+<body style="Margin:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;min-width:100%;background-color:#f3f2f0;">
+<center class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f3f2f0;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f3f2f0;" bgcolor="#f3f2f0;">
+    <tr>
+      <td width="100%"><div class="webkit" style="max-width:600px;Margin:0 auto;"> 
+						<table width="600" align="center" cellpadding="0" cellspacing="0" border="0" style="border-spacing:0" >
+							<tr>
+								<td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >          
+                <table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; border-top:1px solid #e8e7e5" bgcolor="#FFFFFF">
+                  <tr>
+                    <td align="left" style="padding:50px 50px 50px 50px"><p style="color:#262626; font-size:24px; text-align:left; font-family: Verdana, Geneva, sans-serif"><strong>Halloo!</strong></p>
+                      <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">Terima kasih telah bersedia untuk mendaftar MAGE 8. Pertama, anda perlu untuk mengonfirmasi akun anda. Cukup dengan menekan tombol berikut. <br />
+                        <br />
+                      </p>
+                      <table border="0" align="left" cellpadding="0" cellspacing="0" style="Margin:0 auto;">
+                        <tbody>
+                          <tr>
+                            <td align="center"><table border="0" cellpadding="0" cellspacing="0" style="Margin:0 auto;">
                                 <tr>
-                                    <td bgcolor="#1a1a1a" align="center" style="padding: 20px 30px 60px 30px;">
-                                        <table border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td align="center" style="border-radius: 3px;" bgcolor="#ff4655"><a href="{{link}}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ff4655; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #ff4655; display: inline-block;">Confirm Account</a></td>
-                                            </tr>
-                                        </table>
-                                    </td>
+                                  <td width="250" height="60" align="center" bgcolor="#1f3ca6" style="-moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px;"><a href="{{link}}" style="width:250; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">Verify Email<img src="https://firebasestorage.googleapis.com/v0/b/mage8-657e0.appspot.com/o/resources%2Fimages%2Farrow.png?alt=media&token=59e2fe03-8cdb-497b-9e94-a26baa6cdde3" width="32" height="17" style="padding-top:5px" alt="" border="0"/></a></td>
                                 </tr>
-                            </table>
-                        </td>
-                    </tr> <!-- COPY -->
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left" style="padding: 0px 30px 0px 30px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Jika tombol tersebut tidak berfungsi, copy dan paste link berikut di browser kesayangan anda:</p>
-                        </td>
-                    </tr> <!-- COPY -->
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left" style="padding: 20px 30px 20px 30px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;"><a href="#" target="_blank" style="color: #ff4655;">{{link}}</a></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left" style="padding: 0px 30px 20px 30px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Jika anda punya pertanyaan, silahkan balas email ini. Kami akan senang membantu anda.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;"><br>MAGE ITS Team</p>
-                        </td>
-                    </tr>
+                              </table></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <br> <br> <br> <br> <br>
+                      <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px "><br />
+                        Jika tombol tersebut tidak berfungsi, tekan <a href="{{link}}"> disini.</a>
+                        <br />
+                        <br />
+                        <br />
+                        Terimakasih, <br />
+                        MAGE ITS</p></td>
+                  </tr>
                 </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#ff4655" align="center" style="padding: 0px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#ff4655" align="left" style="padding: 0px 30px 30px 30px; line-height: 18px;"> <br>
-                        </td>
-                    </tr>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td height="30">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td class="two-column" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-align:center;font-size:0;"><!--[if (gte mso 9)|(IE)]>
+													<table width="100%" style="border-spacing:0" >
+													<tr>
+													<td width="60%" valign="top" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >
+													<![endif]-->
+                      
+                      <div class="column" style="width:100%;max-width:350px;display:inline-block;vertical-align:top;">
+                        <table class="contents" style="border-spacing:0; width:100%">
+                          <tr>
+                            <td width="39%" align="right" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;"><a href="#" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/mage8-657e0.appspot.com/o/resources%2Fimages%2Flogos.svg?alt=media&token=b657f574-e38e-40e2-8e31-6b0cf9551147" alt="" width="59" height="59" style="border-width:0; max-width:59px;height:auto; display:block; padding-right:20px" /></a></td>
+                            <td width="61%" align="left" valign="middle" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;"><p style="color:#787777; font-size:13px; text-align:left; font-family: Verdana, Geneva, sans-serif">MAGE 8 Team<br />
+                                Teknik Komputer<br />
+                                ITS</p></td>
+                          </tr>
+                        </table>
+                      </div>
+                      
+                      <div class="column" style="width:100%;max-width:248px;display:inline-block;vertical-align:top;">
+                        <table width="100%" style="border-spacing:0">
+                          <tr>
+                            <td class="inner" style="padding-top:0px;padding-bottom:10px; padding-right:10px;padding-left:10px;"><table class="contents" style="border-spacing:0; width:100%">
+                                <tr>
+                                  <td width="32%" align="center" valign="top" style="padding-top:10px"><table width="150" border="0" cellspacing="0" cellpadding="0">
+                                      <tr>
+                                        <td width="33" align="center"><a href="https://web.facebook.com/mageits?_rdc=1&_rdr" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/mage8-657e0.appspot.com/o/resources%2Fimages%2Ffb.jpg?alt=media&token=782a4610-dd44-4daf-ae34-97946f107bb0" alt="facebook" width="36" height="36" border="0" style="border-width:0; max-width:36px;height:auto; display:block; max-height:36px"/></a></td>
+                                        <td width="34" align="center"><a href="https://page.line.me/rio5948f?openQrModal=true" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/mage8-657e0.appspot.com/o/resources%2Fimages%2Fline.png?alt=media&token=dbdfbe5c-aae6-4abb-9c38-1c74f976bf0d" alt="twitter" width="36" height="36" border="0" style="border-width:0; max-width:36px;height:auto; display:block; max-height:36px"/></a></td>
+                                        <td width="33" align="center"><a href="https://www.youtube.com/channel/UCO1SuldERZu0jgBBDzzOkoQ" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/mage8-657e0.appspot.com/o/resources%2Fimages%2Fyt.png?alt=media&token=be178e7b-3232-4116-b1b3-37ca13ad11cc" alt="linkedin" width="36" height="36" border="0" style="border-width:0; max-width:36px;height:auto; display:block; max-height:36px"/></a></td>
+                                      </tr>
+                                    </table></td>
+                                </tr>
+                              </table></td>
+                          </tr>
+                        </table>
+                      </div>
+                  </tr>
+                  <tr>
+                    <td height="30">&nbsp;</td>
+                  </tr>
                 </table>
-            </td>
-        </tr>
-    </table>
+            </tr>
+          </table>
+					</td>
+				</tr>
+			</table>
+			<![endif]--> 
+        </div></td>
+    </tr>
+  </table>
+</center>
 </body>
 </html>
 `;
 
 const resetTemplate = String.raw`
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <style type="text/css">
-        /* CLIENT-SPECIFIC STYLES */
-        body,
-        table,
-        td,
-        a {
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-        }
-        table,
-        td {
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
-        }
-        table {
-            border-collapse: collapse !important;
-        }
-        body {
-            height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
-        }
-        /* iOS BLUE LINKS */
-        a[x-apple-data-detectors] {
-            color: inherit !important;
-            text-decoration: none !important;
-            font-size: inherit !important;
-            font-family: inherit !important;
-            font-weight: inherit !important;
-            line-height: inherit !important;
-        }
-        /* MOBILE STYLES */
-        @media screen and (max-width:600px) {
-            h1 {
-                font-size: 32px !important;
-                line-height: 32px !important;
-            }
-        }
-        /* ANDROID CENTER FIX */
-        div[style*="margin: 16px 0;"] {
-            margin: 0 !important;
-        }
-    </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--[if !mso]><!-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!--<![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title></title>
+<style type="text/css">
+* {
+	-webkit-font-smoothing: antialiased;
+}
+body {
+	Margin: 0;
+	padding: 0;
+	min-width: 100%;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	mso-line-height-rule: exactly;
+}
+table {
+	border-spacing: 0;
+	color: #333333;
+	font-family: Arial, sans-serif;
+}
+img {
+	border: 0;
+}
+.wrapper {
+	width: 100%;
+	table-layout: fixed;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+.webkit {
+	max-width: 600px;
+}
+.outer {
+	Margin: 0 auto;
+	width: 100%;
+	max-width: 600px;
+}
+.full-width-image img {
+	width: 100%;
+	max-width: 600px;
+	height: auto;
+}
+.inner {
+	padding: 10px;
+}
+p {
+	Margin: 0;
+	padding-bottom: 10px;
+}
+.h1 {
+	font-size: 21px;
+	font-weight: bold;
+	Margin-top: 15px;
+	Margin-bottom: 5px;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+.h2 {
+	font-size: 18px;
+	font-weight: bold;
+	Margin-top: 10px;
+	Margin-bottom: 5px;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+.one-column .contents {
+	text-align: left;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+.one-column p {
+	font-size: 14px;
+	Margin-bottom: 10px;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+.two-column {
+	text-align: center;
+	font-size: 0;
+}
+.two-column .column {
+	width: 100%;
+	max-width: 300px;
+	display: inline-block;
+	vertical-align: top;
+}
+.contents {
+	width: 100%;
+}
+.two-column .contents {
+	font-size: 14px;
+	text-align: left;
+}
+.two-column img {
+	width: 100%;
+	max-width: 280px;
+	height: auto;
+}
+.two-column .text {
+	padding-top: 10px;
+}
+.three-column {
+	text-align: center;
+	font-size: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.three-column .column {
+	width: 100%;
+	max-width: 200px;
+	display: inline-block;
+	vertical-align: top;
+}
+.three-column .contents {
+	font-size: 14px;
+	text-align: center;
+}
+.three-column img {
+	width: 100%;
+	max-width: 180px;
+	height: auto;
+}
+.three-column .text {
+	padding-top: 10px;
+}
+.img-align-vertical img {
+	display: inline-block;
+	vertical-align: middle;
+}
+@media only screen and (max-device-width: 480px) {
+	table[class=hide], img[class=hide], td[class=hide] {
+		display: none !important;
+	}
+	.contents1 {
+		width: 100%;
+	}
+	.contents1 {
+		width: 100%;
+	}
+}
+</style>
 </head>
-<body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
-    <!-- HIDDEN PREHEADER TEXT -->
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> We're thrilled to have you here! Get ready to dive into your new account. </div>
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <!-- LOGO -->
-        <tr>
-            <td bgcolor="#ff4655" align="center">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td align="center" valign="top" style="padding: 40px 10px 40px 10px;"> </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#ff4655" align="center" style="padding: 0px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
-                            <h1 style="font-size: 48px; font-weight: 400; margin: 2;">Reset Password</h1>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#1a1a1a" align="center" style="padding: 0px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left" style="padding: 20px 30px 40px 30px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Halo. Anda menerima email ini karena kami mendapatkan permintaan untuk mereset password akun MAGE 7 anda. Untuk mereset password, klik tombol berikut.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left">
-                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+<body style="Margin:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;min-width:100%;background-color:#f3f2f0;">
+<center class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f3f2f0;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f3f2f0;" bgcolor="#f3f2f0;">
+    <tr>
+      <td width="100%"><div class="webkit" style="max-width:600px;Margin:0 auto;"> 
+						<table width="600" align="center" cellpadding="0" cellspacing="0" border="0" style="border-spacing:0" >
+							<tr>
+								<td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >          
+                <table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; border-top:1px solid #e8e7e5" bgcolor="#FFFFFF">
+                  <tr>
+                    <td align="left" style="padding:50px 50px 50px 50px"><p style="color:#262626; font-size:24px; text-align:left; font-family: Verdana, Geneva, sans-serif"><strong>Halloo!!</strong></p>
+                      <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">Anda menerima email ini karena kami mendapatkan permintaan untuk mereset password akun MAGE 8 anda. Untuk mereset password, klik tombol berikut. <br />
+                        <br />
+                      </p>
+                      <table border="0" align="left" cellpadding="0" cellspacing="0" style="Margin:0 auto;">
+                        <tbody>
+                          <tr>
+                            <td align="center"><table border="0" cellpadding="0" cellspacing="0" style="Margin:0 auto;">
                                 <tr>
-                                    <td bgcolor="#1a1a1a" align="center" style="padding: 20px 30px 60px 30px;">
-                                        <table border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td align="center" style="border-radius: 3px;" bgcolor="#ff4655"><a href="{{link}}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ff4655; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #ff4655; display: inline-block;">Reset Password</a></td>
-                                            </tr>
-                                        </table>
-                                    </td>
+                                  <td width="250" height="60" align="center" bgcolor="#1f3ca6" style="-moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px;"><a href="{{link}}" style="width:250; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">Reset Password<img src="https://firebasestorage.googleapis.com/v0/b/mage8-657e0.appspot.com/o/resources%2Fimages%2Farrow.png?alt=media&token=59e2fe03-8cdb-497b-9e94-a26baa6cdde3" width="32" height="17" style="padding-top:5px" alt="" border="0"/></a></td>
                                 </tr>
-                            </table>
-                        </td>
-                    </tr> <!-- COPY -->
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left" style="padding: 0px 30px 0px 30px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Jika tombol tersebut tidak berfungsi, copy dan paste link berikut di browser kesayangan anda:</p>
-                        </td>
-                    </tr> <!-- COPY -->
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left" style="padding: 20px 30px 20px 30px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;"><a href="#" target="_blank" style="color: #ff4655;">{{link}}</a></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left" style="padding: 0px 30px 20px 30px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Jika anda punya pertanyaan, silahkan balas email ini. Kami akan senang membantu anda.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#1a1a1a" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #ece8e1; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;"><br>MAGE ITS Team</p>
-                        </td>
-                    </tr>
+                              </table></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <br> <br> <br> <br> <br>
+                      <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px "><br />
+                        ika tombol tersebut tidak berfungsi, tekan <a href="{{link}}"> here.</a>
+                        <br />
+                        <br />
+                        <br />
+                        Terimakasih, <br />
+                        MAGE ITS</p></td>
+                  </tr>
                 </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#ff4655" align="center" style="padding: 0px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#ff4655" align="left" style="padding: 0px 30px 30px 30px; line-height: 18px;"> <br>
-                        </td>
-                    </tr>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                    <td height="30">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td class="two-column" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-align:center;font-size:0;"><!--[if (gte mso 9)|(IE)]>
+													<table width="100%" style="border-spacing:0" >
+													<tr>
+													<td width="60%" valign="top" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >
+													<![endif]-->
+                      
+                      <div class="column" style="width:100%;max-width:350px;display:inline-block;vertical-align:top;">
+                        <table class="contents" style="border-spacing:0; width:100%">
+                          <tr>
+                            <td width="39%" align="right" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;"><a href="#" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/mage8-657e0.appspot.com/o/resources%2Fimages%2Flogos.svg?alt=media&token=b657f574-e38e-40e2-8e31-6b0cf9551147" alt="" width="59" height="59" style="border-width:0; max-width:59px;height:auto; display:block; padding-right:20px" /></a></td>
+                            <td width="61%" align="left" valign="middle" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;"><p style="color:#787777; font-size:13px; text-align:left; font-family: Verdana, Geneva, sans-serif">MAGE 8 Team<br />
+                                Teknik Komputer<br />
+                                ITS</p></td>
+                          </tr>
+                        </table>
+                      </div>
+                      
+                      <div class="column" style="width:100%;max-width:248px;display:inline-block;vertical-align:top;">
+                        <table width="100%" style="border-spacing:0">
+                          <tr>
+                            <td class="inner" style="padding-top:0px;padding-bottom:10px; padding-right:10px;padding-left:10px;"><table class="contents" style="border-spacing:0; width:100%">
+                                <tr>
+                                  <td width="32%" align="center" valign="top" style="padding-top:10px"><table width="150" border="0" cellspacing="0" cellpadding="0">
+                                      <tr>
+                                        <td width="33" align="center"><a href="https://web.facebook.com/mageits?_rdc=1&_rdr" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/mage8-657e0.appspot.com/o/resources%2Fimages%2Ffb.jpg?alt=media&token=782a4610-dd44-4daf-ae34-97946f107bb0" alt="facebook" width="36" height="36" border="0" style="border-width:0; max-width:36px;height:auto; display:block; max-height:36px"/></a></td>
+                                        <td width="34" align="center"><a href="https://page.line.me/rio5948f?openQrModal=true" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/mage8-657e0.appspot.com/o/resources%2Fimages%2Fline.png?alt=media&token=dbdfbe5c-aae6-4abb-9c38-1c74f976bf0d" alt="twitter" width="36" height="36" border="0" style="border-width:0; max-width:36px;height:auto; display:block; max-height:36px"/></a></td>
+                                        <td width="33" align="center"><a href="https://www.youtube.com/channel/UCO1SuldERZu0jgBBDzzOkoQ" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/mage8-657e0.appspot.com/o/resources%2Fimages%2Fyt.png?alt=media&token=be178e7b-3232-4116-b1b3-37ca13ad11cc" alt="linkedin" width="36" height="36" border="0" style="border-width:0; max-width:36px;height:auto; display:block; max-height:36px"/></a></td>
+                                      </tr>
+                                    </table></td>
+                                </tr>
+                              </table></td>
+                          </tr>
+                        </table>
+                      </div>
+                  </tr>
+                  <tr>
+                    <td height="30">&nbsp;</td>
+                  </tr>
                 </table>
-            </td>
-        </tr>
-    </table>
+            </tr>
+          </table>
+					</td>
+				</tr>
+			</table>
+			<![endif]--> 
+        </div></td>
+    </tr>
+  </table>
+</center>
 </body>
 </html>
 `;
