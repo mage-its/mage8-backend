@@ -43,7 +43,7 @@ const sendEmail = async (to, subject, html) => {
 const sendResetPasswordEmail = async (to, token) => {
   const subject = 'Reset password';
   // replace this url with the link to the reset password page of your front-end app
-  const resetPasswordUrl = `${config.url}/reset-password/${token}`;
+  const resetPasswordUrl = `${config.url}/auth/reset-password/${token}`;
   const html = getResetPassHtml(resetPasswordUrl);
   await sendEmail(to, subject, html);
 };
@@ -57,7 +57,7 @@ const sendResetPasswordEmail = async (to, token) => {
 const sendVerificationEmail = async (to, token) => {
   const subject = 'Email Verification';
   // replace this url with the link to the email verification page of your front-end app
-  const verificationEmailUrl = `${config.url}/confirmationemail?token=${token}`;
+  const verificationEmailUrl = `${config.url}/auth/verify-email?token=${token}`;
   const html = getVerMailHtml(verificationEmailUrl);
   await sendEmail(to, subject, html);
 };
