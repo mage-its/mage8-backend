@@ -3,76 +3,71 @@ const config = require('../config/config');
 const { getCompeByUserId } = require('../services/compe.service');
 const { getKodeBayarByCabang } = require('../services/kodeBayar.service');
 
-
-
 // const cat = {
 //   olim: 'paymentOlim',
 // };
 
-const paymentBarrier = async(registeredComp,id) => {
-  if(registeredComp === "olim"){
+const paymentBarrier = async (registeredComp, id) => {
+  if (registeredComp === 'olim') {
     try {
-      const cabang = "olim";
+      const cabang = 'olim';
       const kodebayar = await getKodeBayarByCabang(cabang);
-      if(kodebayar.isPaymentClose){
+      if (kodebayar.isPaymentClose) {
         return undefined;
       }
-      else return 1;
+      return 1;
     } catch (error) {
       return undefined;
     }
   }
 
-  if(registeredComp === "appdev"){
-    try {
-      const compe = await getCompeByUserId(id);
-      const cabang = compe.kategori === "Siswa" ? "adevs" : "adevm";
-      const kodebayar = await getKodeBayarByCabang(cabang);
-      if(kodebayar.isPaymentClose){
-        return undefined;
-      }
-      else return 1;
-    } catch (error) {
-      return undefined;
-    }
-  }
-
-  if(registeredComp === "gamedev"){
+  if (registeredComp === 'appdev') {
     try {
       const compe = await getCompeByUserId(id);
-      const cabang = compe.kategori === "Siswa" ? "gdevs" : "gdevm";
+      const cabang = compe.kategori === 'Siswa' ? 'adevs' : 'adevm';
       const kodebayar = await getKodeBayarByCabang(cabang);
-      if(kodebayar.isPaymentClose){
+      if (kodebayar.isPaymentClose) {
         return undefined;
       }
-      else return 1;
+      return 1;
     } catch (error) {
       return undefined;
     }
   }
-  
-  if(registeredComp === "iotdev"){
+
+  if (registeredComp === 'gamedev') {
     try {
-      const cabang = "idev"
+      const compe = await getCompeByUserId(id);
+      const cabang = compe.kategori === 'Siswa' ? 'gdevs' : 'gdevm';
       const kodebayar = await getKodeBayarByCabang(cabang);
-      if(kodebayar.isPaymentClose){
+      if (kodebayar.isPaymentClose) {
         return undefined;
       }
-      else return 1;
+      return 1;
     } catch (error) {
       return undefined;
     }
   }
-}
 
-    
+  if (registeredComp === 'iotdev') {
+    try {
+      const cabang = 'idev';
+      const kodebayar = await getKodeBayarByCabang(cabang);
+      if (kodebayar.isPaymentClose) {
+        return undefined;
+      }
+      return 1;
+    } catch (error) {
+      return undefined;
+    }
+  }
+};
 
-
-  // if (config.close[cat[req?.user?.registeredComp]]) {
-  //   res.status(httpStatus.FORBIDDEN).send({
-  //     code: httpStatus.FORBIDDEN,
-  //     message: `Pembayaran ${req.user.registeredComp === 'olim' ? 'Olimpiade' : 'Development Competition'} sudah ditutup`,
-  //   });
-  // } else next();
+// if (config.close[cat[req?.user?.registeredComp]]) {
+//   res.status(httpStatus.FORBIDDEN).send({
+//     code: httpStatus.FORBIDDEN,
+//     message: `Pembayaran ${req.user.registeredComp === 'olim' ? 'Olimpiade' : 'Development Competition'} sudah ditutup`,
+//   });
+// } else next();
 
 module.exports = paymentBarrier;

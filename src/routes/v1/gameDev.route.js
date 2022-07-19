@@ -26,7 +26,7 @@ router.patch('/update-profile', auth(), validate(gameDevValidation.updateProfile
 
 router.post('/check-namaTim', auth(), validate(gameDevValidation.checkTeamName), gameDevController.checkTeamName);
 
-router.post('/upload-proposal', proposalBarrier("gdevm"), auth(), gameDevController.uploadProposal);
+router.post('/upload-proposal', proposalBarrier('gdevm'), auth(), gameDevController.uploadProposal);
 
 // Admin route
 

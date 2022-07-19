@@ -3,7 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const { userService, appDevService } = require('../services');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
-const proposalBarrier = require('../middlewares/proposalBarrier')
+const proposalBarrier = require('../middlewares/proposalBarrier');
 
 const daftarAppDev = catchAsync(async (req, res) => {
   const { body, user } = req;

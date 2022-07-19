@@ -18,22 +18,22 @@ const kodeBayarSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    isClose:{
+    isClose: {
       type: Boolean,
       default: false,
     },
-    isPaymentClose:{
+    isPaymentClose: {
       type: Boolean,
       default: false,
     },
-    isProposalClose:{
+    isProposalClose: {
       type: Boolean,
       default: false,
     },
-    isKaryaClose:{
+    isKaryaClose: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   {
     timestamps: true,

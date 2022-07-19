@@ -32,7 +32,7 @@ router.get('/download-csv/:compe', auth('getUsers'), validate(compeValidation.do
 
 router.post(
   '/submit-karya',
-  submitKaryaBarrier("adevm"),
+  submitKaryaBarrier('adevm'),
   auth(),
   validate(compeValidation.submitKarya),
   compeController.submitKarya

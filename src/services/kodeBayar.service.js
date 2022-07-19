@@ -82,43 +82,43 @@ const incNoUrut = async (cabang, kodeBayarObj) => {
 
 const toggleClose = async (id) => {
   const kodeBayar = await KodeBayar.findById(id);
-  if(!kodeBayar){
+  if (!kodeBayar) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Kode Bayar not found');
   }
   kodeBayar.isClose = !kodeBayar.isClose;
   await kodeBayar.save();
   return kodeBayar;
-}
+};
 
 const togglePayment = async (id) => {
   const kodeBayar = await KodeBayar.findById(id);
-  if(!kodeBayar){
+  if (!kodeBayar) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Kode Bayar not found');
   }
   kodeBayar.isPaymentClose = !kodeBayar.isPaymentClose;
   await kodeBayar.save();
   return kodeBayar;
-}
+};
 
 const toggleKarya = async (id) => {
   const kodeBayar = await KodeBayar.findById(id);
-  if(!kodeBayar){
+  if (!kodeBayar) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Kode Bayar not found');
   }
   kodeBayar.isKaryaClose = !kodeBayar.isKaryaClose;
   await kodeBayar.save();
   return kodeBayar;
-}
+};
 
 const toggleProposal = async (id) => {
   const kodeBayar = await KodeBayar.findById(id);
-  if(!kodeBayar){
+  if (!kodeBayar) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Kode Bayar not found');
   }
   kodeBayar.isProposalClose = !kodeBayar.isProposalClose;
   await kodeBayar.save();
   return kodeBayar;
-}
+};
 module.exports = {
   createKodeBayar,
   queryKodeBayars,
