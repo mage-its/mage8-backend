@@ -49,7 +49,7 @@ const daftarOlim = async (olimBody, user) => {
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  olim.noPeserta = `OLI0${noUrut}`;
+  olim.noPeserta = `OLIS${noUrut}`;
   olim.price = kode.price + kode.no;
 
   // eslint-disable-next-line no-param-reassign
@@ -118,7 +118,7 @@ const createOlim = async (olimBody, userId) => {
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  olim.noPeserta = `OLI0${noUrut}`;
+  olim.noPeserta = `OLIS${noUrut}`;
   olim.price = kode.price + kode.no;
 
   user.registeredComp = 'olim';
