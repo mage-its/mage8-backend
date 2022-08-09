@@ -63,7 +63,7 @@ const daftarGameDev = async (gameDevBody, user) => {
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  const noUrutPrefix = gameDevBody.kategori === 'Siswa' ? '0' : '1';
+  const noUrutPrefix = gameDevBody.kategori === 'Siswa' ? 'S' : 'M';
 
   gameDev.noPeserta = `DCG${noUrutPrefix}${noUrut}`;
   gameDev.price = kode.price + kode.no;
@@ -162,7 +162,7 @@ const createGameDev = async (gameDevBody, userId) => {
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  const noUrutPrefix = gameDevBody.kategori === 'Siswa' ? '0' : '1';
+  const noUrutPrefix = gameDevBody.kategori === 'Siswa' ? 'S' : 'M';
 
   gameDev.noPeserta = `DCG${noUrutPrefix}${noUrut}`;
   gameDev.price = kode.price + kode.no;

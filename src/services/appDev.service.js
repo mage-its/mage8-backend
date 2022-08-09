@@ -56,7 +56,7 @@ const daftarAppDev = async (appDevBody, user) => {
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  const noUrutPrefix = appDevBody.kategori === 'Siswa' ? '0' : '1';
+  const noUrutPrefix = appDevBody.kategori === 'Siswa' ? 'S' : 'M';
 
   appDev.noPeserta = `DCA${noUrutPrefix}${noUrut}`;
   appDev.price = kode.price + kode.no;
@@ -153,7 +153,7 @@ const createAppDev = async (appDevBody, userId) => {
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  const noUrutPrefix = appDevBody.kategori === 'Siswa' ? '0' : '1';
+  const noUrutPrefix = appDevBody.kategori === 'Siswa' ? 'S' : 'M';
 
   appDev.noPeserta = `DCA${noUrutPrefix}${noUrut}`;
   appDev.price = kode.price + kode.no;

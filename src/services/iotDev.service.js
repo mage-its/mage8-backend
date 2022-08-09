@@ -56,7 +56,7 @@ const daftarIotDev = async (iotDevBody, user) => {
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  const noUrutPrefix = '1';
+  const noUrutPrefix = 'U';
 
   iotDev.noPeserta = `DCI${noUrutPrefix}${noUrut}`;
   iotDev.price = kode.price + kode.no;
@@ -152,7 +152,7 @@ const createIotDev = async (iotDevBody, userId) => {
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  const noUrutPrefix = '1';
+  const noUrutPrefix = 'U';
 
   iotDev.noPeserta = `DCI${noUrutPrefix}${noUrut}`;
   iotDev.price = kode.price + kode.no;
