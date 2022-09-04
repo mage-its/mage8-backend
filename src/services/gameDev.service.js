@@ -57,13 +57,13 @@ const daftarGameDev = async (gameDevBody, user) => {
 
   gameDev.user = user.id;
 
-  const cabang = gameDevBody.kategori === 'Siswa' ? 'gdevs' : 'gdevm';
+  const cabang = 'gdevu';
 
   const kode = await kodeBayarService.getKodeBayarByCabang(cabang);
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  const noUrutPrefix = gameDevBody.kategori === 'Siswa' ? 'S' : 'M';
+  const noUrutPrefix = 'U';
 
   gameDev.noPeserta = `DCG${noUrutPrefix}${noUrut}`;
   gameDev.price = kode.price + kode.no;
@@ -156,13 +156,13 @@ const createGameDev = async (gameDevBody, userId) => {
   if (!gameDevBody.pathBuktiUploadTwibbon || !gameDevBody.pathBuktiFollowMage || !gameDevBody.pathBuktiRepostStory) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Persyaratan registrasi wajib diupload');
   }
-  const cabang = gameDevBody.kategori === 'Siswa' ? 'gdevs' : 'gdevm';
+  const cabang = 'gdevu';
 
   const kode = await kodeBayarService.getKodeBayarByCabang(cabang);
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  const noUrutPrefix = gameDevBody.kategori === 'Siswa' ? 'S' : 'M';
+  const noUrutPrefix = 'U';
 
   gameDev.noPeserta = `DCG${noUrutPrefix}${noUrut}`;
   gameDev.price = kode.price + kode.no;

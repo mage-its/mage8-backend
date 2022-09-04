@@ -50,13 +50,13 @@ const daftarAppDev = async (appDevBody, user) => {
 
   appDev.user = user.id;
 
-  const cabang = appDevBody.kategori === 'Siswa' ? 'adevs' : 'adevm';
+  const cabang = 'adevu';
 
   const kode = await kodeBayarService.getKodeBayarByCabang(cabang);
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  const noUrutPrefix = appDevBody.kategori === 'Siswa' ? 'S' : 'M';
+  const noUrutPrefix = 'U';
 
   appDev.noPeserta = `DCA${noUrutPrefix}${noUrut}`;
   appDev.price = kode.price + kode.no;
@@ -147,13 +147,13 @@ const createAppDev = async (appDevBody, userId) => {
   if (!appDevBody.pathBuktiUploadTwibbon || !appDevBody.pathBuktiFollowMage || !appDevBody.pathBuktiRepostStory) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Persyaratan registrasi wajib diupload');
   }
-  const cabang = appDevBody.kategori === 'Siswa' ? 'adevs' : 'adevm';
+  const cabang = 'adevu';
 
   const kode = await kodeBayarService.getKodeBayarByCabang(cabang);
 
   const noUrut = kode.no.toString().padStart(3, '0');
 
-  const noUrutPrefix = appDevBody.kategori === 'Siswa' ? 'S' : 'M';
+  const noUrutPrefix = 'U';
 
   appDev.noPeserta = `DCA${noUrutPrefix}${noUrut}`;
   appDev.price = kode.price + kode.no;
