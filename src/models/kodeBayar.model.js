@@ -8,7 +8,7 @@ const kodeBayarSchema = mongoose.Schema(
       required: true,
       index: true,
       unique: true,
-      enum: ['olim', 'gdevm', 'adevm', 'idev', 'gdevs', 'adevs'],
+      enum: ['olim', 'gdevu', 'adevu'],
     },
     no: {
       type: Number,

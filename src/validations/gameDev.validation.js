@@ -4,7 +4,7 @@ const { objectId } = require('./custom.validation');
 const daftarGameDev = {
   body: Joi.object()
     .keys({
-      kategori: Joi.string().trim().valid('Mahasiswa', 'Siswa').required(),
+      kategori: Joi.string().trim().valid('Umum').required(),
       namaTim: Joi.string().trim().min(1).max(30).required(),
       namaPembimbing: Joi.string().trim().min(1).max(100),
       hpPembimbing: Joi.string().trim().min(1).max(30),
@@ -60,7 +60,7 @@ const updateProfile = {
 const createGameDev = {
   body: Joi.object()
     .keys({
-      kategori: Joi.string().trim().valid('Mahasiswa', 'Siswa').required(),
+      kategori: Joi.string().trim().valid('Umum').required(),
       namaTim: Joi.string().trim().min(1).max(30).required(),
       namaPembimbing: Joi.string().trim().min(1).max(100),
       hpPembimbing: Joi.string().trim().min(1).max(30),

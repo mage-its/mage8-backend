@@ -6,7 +6,7 @@ const gameDevSchema = mongoose.Schema(
     kategori: {
       type: String,
       required: true,
-      enum: ['Siswa', 'Mahasiswa'],
+      enum: ['Umum'],
     },
     noPeserta: {
       type: String,
