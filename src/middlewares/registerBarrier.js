@@ -17,7 +17,7 @@ const registerBarrier = (category) => async (req, res, next) => {
       res.status(httpStatus.NOT_FOUND).send(error.message);
     }
   } else if (category === 'gamedev') {
-    const cabang = 'gdevs';
+    const cabang = 'gdevu';
     try {
       const kodebayar = await getKodeBayarByCabang(cabang);
       if (kodebayar.isClose) {
@@ -30,7 +30,7 @@ const registerBarrier = (category) => async (req, res, next) => {
       res.status(httpStatus.NOT_FOUND).send(error.message);
     }
   } else if (category === 'appdev') {
-    const cabang = 'adevm';
+    const cabang = 'adevu';
     try {
       const kodebayar = await getKodeBayarByCabang(cabang);
       if (kodebayar.isClose) {
